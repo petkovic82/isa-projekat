@@ -1,0 +1,38 @@
+<div class="container">
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>First name</mat-label>
+      <input matInput [(ngModel)]="firstName">
+    </mat-form-field><br>
+    <mat-form-field appearance="fill">
+      <mat-label>Last name</mat-label>
+      <input matInput [(ngModel)]="lastName">
+    </mat-form-field><br>
+    <mat-form-field appearance="fill">
+      <mat-label>Gender</mat-label>
+      <mat-select [(ngModel)]="gender">
+        <mat-option *ngFor="let doc of genders" [value]="doc.id">{{ doc.name }}</mat-option>
+      </mat-select>
+    </mat-form-field><br>
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="email">
+    </mat-form-field><br>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput [(ngModel)]="password">
+    </mat-form-field><br>
+    <mat-form-field appearance="fill">
+      <mat-label>Primary care doctor</mat-label>
+      <mat-select [(ngModel)]="doctor">
+        <mat-option *ngFor="let doc of doctors" [value]="doc.id">{{ doc.name }}</mat-option>
+      </mat-select>
+    </mat-form-field><br>
+    <button mat-stroked-button (click)="register()">
+      Register
+    </button>
+    <button mat-stroked-button (click)="login()">
+      Log in
+    </button>
+  </div>
+</div>

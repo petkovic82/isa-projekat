@@ -1,0 +1,30 @@
+
+.mat-stroked-button {
+  color: #382110;
+}
+
+div {
+  width: 40%;
+  margin: auto;
+}
+
+mat-form-field {
+  width: 100%;
+  margin: auto;
+}
+/* CSS to style the mat-form-field and textarea */
+.custom-input {
+  width: 100%;
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.custom-textarea {
+  resize: vertical; /* Allows vertical resizing of the textarea */
+  min-height: 100px; /* Set a minimum height */
+  padding: 10px; /* Add some padding for better spacing */
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 5px; /* Add rounded corners */
+  font-size: 16px; /* Adjust font size */
+  line-height: 1.5; /* Set line height for better readability */
+}

@@ -1,0 +1,15 @@
+
+export class AppointmentDto {
+
+  id: number = 0;
+
+  patientId: number = 0;
+  doctorId: number = 0;
+
+  deleted: boolean = false;
+  startTime = new Date();
+  endTime = new Date();
+
+  constructor() {
+  }
+}

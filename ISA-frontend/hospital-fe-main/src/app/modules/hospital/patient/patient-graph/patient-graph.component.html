@@ -1,0 +1,56 @@
+<app-navbar></app-navbar>
+<div>
+  <div class="main-container">
+    <div class="year-stats">
+      <ng-container *ngFor="let d of data; let i = index">
+        <div class="month-group" [ngClass]="{ selected: i === selectedMonthIndex }">
+          <div class="bar" [style.height.px]="d.barHeight"></div>
+          <p class="month">{{ d.barHeight }}</p>
+          <p class="month">{{ d.date }}</p>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<div class="div2">
+  <div class="container">
+
+    <mat-form-field appearance="fill">
+      <mat-label>bloodSugar</mat-label>
+      <input matInput type="number" [(ngModel)]="bloodSugar" matTooltip="Must be a number">
+    </mat-form-field><br>
+    <mat-form-field appearance="fill">
+      <mat-label>fatPercentage</mat-label>
+      <input matInput type="number" [(ngModel)]="fatPercentage" matTooltip="Must be a number">
+    </mat-form-field><br>
+    <mat-form-field appearance="fill">
+      <mat-label>weight</mat-label>
+      <input matInput type="number" [(ngModel)]="weight" matTooltip="Must be a number">
+    </mat-form-field><br>
+
+    <mat-form-field appearance="fill">
+      <mat-label>bloodPressure</mat-label>
+      <input matInput  [(ngModel)]="bloodPressure" >
+    </mat-form-field><br>
+
+
+    <mat-form-field>
+      <mat-label>cycleStart</mat-label>
+      <input matInput
+             #resultPickerModel="ngModel"
+             [matDatepicker]="resultPicker"
+             [(ngModel)]="cycleStart">
+      <mat-datepicker-toggle matSuffix [for]="resultPicker"></mat-datepicker-toggle>
+      <mat-datepicker #resultPicker>
+      </mat-datepicker>
+    </mat-form-field><br>
+
+    <button class="cta" (click)="createMedicalData()">
+      <span class="hover-underline-animation">CREATE</span>
+      <svg viewBox="0 0 46 16" height="10" width="30" xmlns="http://www.w3.org/2000/svg" id="arrow-horizontal">
+        <path transform="translate(30)" d="M8,0,6.545,1.455l5.506,5.506H-30V9.039H12.052L6.545,14.545,8,16l8-8Z" data-name="Path 10" id="Path_10"></path>
+      </svg>
+    </button>
+  </div>
+
+</div>

@@ -1,0 +1,19 @@
+<router-outlet></router-outlet>
+<div class="container">
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input [(ngModel)]="user.username" matInput id="email">
+    </mat-form-field><br>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input [(ngModel)]="user.password" matInput type="password" id="password">
+    </mat-form-field><br>
+    <button (click)="login()" mat-stroked-button id="loginButton">
+      Login
+    </button>
+    <button (click)="register()" mat-stroked-button>
+      Register
+    </button>
+  </div>
+</div>
