@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth/services/auth.service";
 import {Router} from "@angular/router";
 // @ts-ignore
 import {UserDto} from "../../dto/userDto";
 import {DTORegistrationMedicalData} from "../../services/auth/models/DTORegistrationMedicalData";
-import {UserServiceService} from "../../services/user.service.service";
-import {map} from "rxjs";
-import {UsersService} from "../../services/service/users.service";
+import {TokenService} from "../../hospital/navbar/services/token.service";
 
 @Component({
   selector: 'app-registration',
@@ -14,75 +12,81 @@ import {UsersService} from "../../services/service/users.service";
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-//TRIMUJ SVEE
- gender: number = 0;
+
+  passwordFieldType: string = 'password';
   firstName: any;
   lastName: any;
   email: any;
   password: any;
-  doctor: number | null = null;
-  userType: number = 0;
-  newUser = new DTORegistrationMedicalData('', '','','',0, 1);
-  constructor(private authService: AuthService,
-              private router: Router,
-              private userService: UserServiceService,
-              private usersService : UsersService
-             ) {}
+  companyId: any;
+  phoneNumber: any;
+  job: any;
+  country: any;
+  username: any;
+  city: any;
+  role: number = 0;
+  confirmPassword: any;
+  passwordsDoNotMatch: boolean = false;
+  systemAdminLoggedIn: boolean = false;
 
-  doctors = [
-    { id: '1', name: 'Ana Kesic' },];
-  genders = [
-    { id: '0', name: 'Female' },
-    { id: '1', name: 'Male' }
+  newUser = new DTORegistrationMedicalData("", "", "", "", "", 0, "", "", "", 0, 0, 0);
+
+
+  constructor(private authService: AuthService, private router: Router, private ts: TokenService) {}
+
+  roles = [
+    {id: '0', name: 'Employee'},
+  ];
+  rolesWhenSystemAdmin = [
+    {id: '0', name: 'Employee'},
+    {id: '1', name: 'Company admin'},
+    {id: '2', name: 'System admin'}
   ];
 
-
-
   register() {
-    this.newUser.bloodSugar = parseInt(String(this.gender));
+    this.checkPasswordMatch()
+    if (this.passwordsDoNotMatch) return;
+
+    this.newUser.role = parseInt(String(this.role));
+    this.newUser.city = this.city;
+    this.newUser.username = this.username;
+    this.newUser.country = this.country;
+    this.newUser.job = this.job;
+    this.newUser.phoneNumber = this.phoneNumber;
+    this.newUser.companyId = parseInt(String(this.companyId));
     this.newUser.firstName = this.firstName;
     this.newUser.lastName = this.lastName;
     this.newUser.email = this.email;
     this.newUser.password = this.password;
-    this.newUser.primaryCareDoctorId =  parseInt(String(this.doctor));
-    this.newUser.userType = 0;
 
     console.log(this.newUser)
     this.authService.register(this.newUser).subscribe({
       next: res => {
         console.log(res);
-        alert("Successfully registered patient with id:" +res.id);
+        alert("Successfully registered patient with id: " + res.id + "! Check your email to confirm registration!");
       },
       error: err => {
-        alert("Vas nalog je blokiran!")
+        alert("Error !")
         console.log(err);
       }
     });
 
   }
+
   ngOnInit(): void {
-    this.usersService.getAllSpecialists(1).pipe(
-      map((res: any) => {
-        console.log(res)
-        return res.map((doctor: any) => {
-          return {
-            id: doctor.id,
-            name: `${doctor.name}  ${doctor.surname}`
-          };
-        });
-      })
-    ).subscribe({
-      next: (doctors: any) => {
-        this.doctors= doctors
-       console.log(doctors);
-      },
-      error: (err: any) => {
-        console.log(err);
-      }
-    });
-
+    if( this.ts.getRoleFromToken() === 2 )
+    this.systemAdminLoggedIn = true;
   }
+
   login() {
     this.router.navigate(['/login']);
+  }
+
+  togglePasswordVisibility() {
+    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+  }
+
+  checkPasswordMatch(): void {
+    this.passwordsDoNotMatch = this.password !== this.confirmPassword;
   }
 }

@@ -7,6 +7,7 @@ export class DTOHealthData {
   MeasurementTime: string = '';
 
   date = new Date();
+
   public constructor(obj?: any) {
     if (obj) {
       this.id = obj.id;

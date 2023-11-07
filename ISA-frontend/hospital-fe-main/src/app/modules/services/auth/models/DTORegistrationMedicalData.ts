@@ -1,41 +1,65 @@
 export enum UserType {
-  PATIENT = 'PATIENT',
-  DOCTOR = 'DOCTOR',
-  ADMIN = 'ADMIN',
+  EMPLOYEE = 'EMPLOYEE',
+  COMPANYADMIN = 'COMPANYADMIN',
+  SYSTEMADMIN = 'SYSTEMADMIN',
 }
 
 export class DTORegistrationMedicalData {
   email: string = "";
+  username: string = "";
   password: string = "";
   firstName: string = "";
   lastName: string = "";
+  role: number = 0;
+  city: string = "";
+  country: string = "";
+  job: string = "";
+  phoneNumber: number = 0;
+  companyId: number = 0;
+  cancelCount: number = 0;
+
 
   name: string = "";
   surname: string = "";
   patientId: number = 0;
-  appointmentId: number = 0;
   id: number = 0;
   deleted: boolean = false;
   userType: number = 0;
   primaryCareDoctorId: number = 1;
-  cancelCount: number = 0;
   blocked: boolean = false;
   bloodSugar: number = 0;
   enabled: boolean = true;
-  specialization: number = 0;
   createdAt = new Date();
   cycleStart: Date | undefined = new Date();
   bloodPressure: string = "";
   fatPercentage: number = 0.0;
   weight: number = 0.0;
 
-  constructor(email: string, password: string,
-              name: string,  surname: string, gender: number, userType: number) {
+  constructor(
+    email: string,
+    username: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    role: number,
+    city: string,
+    country: string,
+    job: string,
+    phoneNumber: number,
+    companyId: number,
+    cancelCount: number
+  ) {
     this.email = email;
+    this.username = username;
     this.password = password;
-    this.firstName = name;
-    this.lastName = surname;
-    this.bloodSugar = gender;
-    this.userType = userType;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.role = role;
+    this.city = city;
+    this.country = country;
+    this.job = job;
+    this.phoneNumber = phoneNumber;
+    this.companyId = companyId;
+    this.cancelCount = cancelCount;
   }
 }

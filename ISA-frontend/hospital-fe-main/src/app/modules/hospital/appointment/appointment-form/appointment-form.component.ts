@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {DTORegistrationMedicalData} from "../../../services/auth/models/DTORegistrationMedicalData";
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/auth/services/auth.service";
 import {Router} from "@angular/router";
 import {UserServiceService} from "../../../services/user.service.service";
-import {map} from "rxjs";
 import {MatTableDataSource} from "@angular/material/table";
 import {DTOAppointment} from "../../../model/room.model";
 import {AppointmentService} from "../../../services/appointment.service";
@@ -25,10 +23,10 @@ export class AppointmentFormComponent implements OnInit {
   endDate: any;
   patient: any;
   doctors = [
-    { id: '1', name: 'Ana Kesic' },];
+    {id: '1', name: 'Ana Kesic'},];
   priorities = [
-    { id: '1', name: 'Time is priority' },
-    { id: '2', name: 'Doctor is priority' },];
+    {id: '1', name: 'Time is priority'},
+    {id: '2', name: 'Doctor is priority'},];
 
   id: number = 0;
   public dataSource = new MatTableDataSource<Date>();
@@ -37,69 +35,31 @@ export class AppointmentFormComponent implements OnInit {
   private appointment: DTOAppointment = new DTOAppointment();
 
   constructor(private authService: AuthService,
-              private appointmentService:AppointmentService,
+              private appointmentService: AppointmentService,
               private router: Router, private userService: UserServiceService,
-              private ts:TokenService) {}
+              private ts: TokenService) {
+  }
 
 
   ngOnInit(): void {
     this.id = Number(this.ts.getIdFromToken());
-    this.userService.getPatientById(this.id).subscribe({
-      next: res => {
-        this.user = res;
-        console.log(this.user)
-        this.patient = `${this.user.firstName}  ${this.user.lastName}`;
-      },
-      error: err => {
-        console.log(err);
-      }
-    });
+    // this.userService.getPatientById(this.id).subscribe({
+    //   next: res => {
+    //     this.user = res;
+    //     console.log(this.user)
+    //     this.patient = `${this.user.firstName}  ${this.user.lastName}`;
+    //   },
+    //   error: err => {
+    //     console.log(err);
+    //   }
+    // });
+  }
 
-    this.userService.getDoctorsForAppointment(this.id).subscribe({
-      next: res => {
-        if (Array.isArray(res)) {
-          const doctors = res.map((doctor: { id: any; firstName: any; lastName: any; }) => {
-            return ({
-              id: doctor.id.toString(),
-              name:  `${doctor.firstName}  ${doctor.lastName}`
-            });
-          });
-          this.doctors = doctors;
-          console.log(doctors);
-        } else {
-          const doctor = {
-            id: res.id.toString(),
-            name: `${res.firstName} ${res.lastName}`
-          };
-          this.doctors = [doctor];
-          console.log(doctor);
-        }
-      },
-      error: err => {
-        console.log(err);
-      }
-    });
+  chooseTime(object: Object) {
+
   }
 
   Generate() {
 
-    this.appointment.startTime = this.startDate;
-    this.appointment.endTime= this.endDate;
-    this.appointment.patientId = this.user.id;
-    this.appointment.doctorId = Number(this.doctor);
-
-    console.log(this.appointment)
-    this.appointmentService.generateAppointment(this.appointment).subscribe(res => {
-      this.dataSource.data = res;
-    })
-  }
-
-  chooseTime(dateTime: any) {
-    this.appointment.startTime = dateTime;
-    console.log(dateTime)
-    console.log(this.appointment)
-    this.appointmentService.createAppointment(this.appointment).subscribe(res => {
-      this.router.navigate(['/appointments/patient/'+this.id]);
-    })
   }
 }

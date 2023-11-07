@@ -1,14 +1,12 @@
-import { Injectable } from "@angular/core";
-import { User } from "../models/user";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { LoginRequest } from "../dtos/login-request";
-import { environment } from "src/environments/environment";
-import { LoginResponse } from "../dtos/login-response";
-import { Router } from "@angular/router";
-import { Token } from "../models/token";
-import { Observable, Subject, throwError } from "rxjs";
-import { DTORegistrationMedicalData } from "../models/DTORegistrationMedicalData";
-import { catchError } from "rxjs/operators";
+import {Injectable} from "@angular/core";
+import {User} from "../models/user";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {LoginResponse} from "../dtos/login-response";
+import {Router} from "@angular/router";
+import {Token} from "../models/token";
+import {Observable, Subject, throwError} from "rxjs";
+import {DTORegistrationMedicalData} from "../models/DTORegistrationMedicalData";
+import {catchError} from "rxjs/operators";
 import jwtDecode from "jwt-decode";
 
 @Injectable({
@@ -37,7 +35,7 @@ export class AuthService {
 
   register(register: DTORegistrationMedicalData): Observable<any> {
     return this.http
-      .post<DTORegistrationMedicalData>("http://localhost:8080/api/user/register", register, {
+      .post<DTORegistrationMedicalData>("http://localhost:16177/api/users/userRegistration", register, {
         headers: this.headers,
       })
       .pipe(catchError(this.handleError));
@@ -72,23 +70,24 @@ export class AuthService {
 
   isAuthenticated() {
     return true;
- }
-
-  isAdmin() {
-    return this.user != null && this.user.roles.includes("ADMIN");
   }
 
-  isPatient() {
-    return this.user != null && this.user.roles.includes("PATIENT");
+  isCompanyAdmin() {
+    return this.user != null && this.user.roles.includes("COMPANYADMIN");
   }
 
-  isDoctor() {
-    return this.user != null && this.user.roles.includes("DOCTOR");
+  isEmployee() {
+    return this.user != null && this.user.roles.includes("EMPLOYEE");
   }
+
+  isSystemAdmin() {
+    return this.user != null && this.user.roles.includes("SYSTEMADMIN");
+  }
+
   getRole() {
-    if (this.isAdmin()) return "HOST";
-    else if (this.isPatient()) return "GUEST";
-    if (this.isDoctor()) return "DOCTOR";
+    if (this.isCompanyAdmin()) return "COMPANYADMIN";
+    else if (this.isEmployee()) return "EMPLOYEE";
+    if (this.isSystemAdmin()) return "SYSTEMADMIN";
     else return "No role";
   }
 

@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService {
 
-  constructor() { }
+  constructor() {
+  }
 
   logout(): void {
     localStorage.setItem("token", "")
@@ -20,9 +21,9 @@ export class TokenService {
     }
   }
 
-  getIdFromToken():string {
+  getIdFromToken(): string {
     let token = window.localStorage.getItem("token")
-    if(token){
+    if (token) {
       let tokenSplit = token.split('.')
       let decoded = decodeURIComponent(encodeURIComponent(window.atob(tokenSplit[1])));
       let obj = JSON.parse(decoded);
@@ -31,9 +32,9 @@ export class TokenService {
     return '';
   }
 
-  getRoleFromToken():number {
+  getRoleFromToken(): number {
     let token = window.localStorage.getItem("token")
-    if(token){
+    if (token) {
       let tokenSplit = token.split('.')
       let decoded = decodeURIComponent(encodeURIComponent(window.atob(tokenSplit[1])));
       let obj = JSON.parse(decoded);
@@ -42,9 +43,9 @@ export class TokenService {
     return 6;
   }
 
-  getEmailFromToken() :string {
+  getEmailFromToken(): string {
     let token = window.localStorage.getItem("token")
-    if(token){
+    if (token) {
       let tokenSplit = token.split('.')
       let decoded = decodeURIComponent(encodeURIComponent(window.atob(tokenSplit[1])));
       let obj = JSON.parse(decoded);

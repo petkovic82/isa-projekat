@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { AppRoutingModule } from 'src/app/app-routing.module';
-import { HomeComponent } from './home/home.component';
-import { LogInComponent } from './log-in/log-in.component';
-import { RegistrationComponent } from './registration/registration.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {AppRoutingModule} from 'src/app/app-routing.module';
+import {HomeComponent} from './home/home.component';
+import {LogInComponent} from './log-in/log-in.component';
+import {RegistrationComponent} from './registration/registration.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NavbarModule} from "../hospital/navbar/navbar.module";
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -17,16 +17,17 @@ import {MaterialModule} from "../../material/material.module";
     LogInComponent,
     RegistrationComponent,
   ],
-    imports: [
-        CommonModule,
-        AppRoutingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NavbarModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MaterialModule,
-    ]
+  imports: [
+    CommonModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NavbarModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MaterialModule,
+  ]
 })
-export class PagesModule { }
+export class PagesModule {
+}
