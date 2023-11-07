@@ -9,7 +9,7 @@
       <div class="card-container">
           <div class="card" *ngFor="let card of company">
             <h4>{{ card.id }}</h4>
-            <p>{{ card.companyName }}</p>
+            <p>{{ card.name }}</p>
           </div>
       </div>
     </div>
@@ -23,7 +23,8 @@
       <div class="card-container ">
         <div class="equip" *ngFor="let card of equipment">
           <h4>{{ card.id }}</h4>
-          <p>{{ card.equipmentName }}</p>
+          <p>{{ card.name }}</p>
+          <p>{{ card.company.name }}</p>
         </div>
       </div>
     </div>

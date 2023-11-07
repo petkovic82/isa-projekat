@@ -29,13 +29,5 @@ export class ProfileServiceTsService {
     return this.http.get<User>(this.baseUrl + '/current', options);
   }
 
-  updateUserProfile(user: User): Observable<any> {
-    let headers = new HttpHeaders({
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + localStorage.getItem("token"), //autorizacija
-    });
-    let options = {headers: headers};
-    return this.http.put(this.baseUrl + '/updateProfile', user, options);
-  }
 
 }

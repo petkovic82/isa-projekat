@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20231106173034_equiip")]
-    partial class equiip
+    [Migration("20231107224209_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,16 +28,19 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("integer");
 
                     b.Property<int>("EquipmentId")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
                     b.Property<int>("State")
@@ -51,19 +54,21 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            CompanyId = 1,
-                            CreatedAt = new DateTime(2023, 11, 6, 18, 30, 33, 658, DateTimeKind.Local).AddTicks(2705),
+                            Date = new DateTime(2023, 11, 7, 23, 42, 9, 49, DateTimeKind.Local).AddTicks(3346),
                             EmployeeId = 1,
                             EquipmentId = 1,
+                            Price = 0.0,
+                            Quantity = 5,
                             State = 1
                         },
                         new
                         {
                             Id = 2,
-                            CompanyId = 2,
-                            CreatedAt = new DateTime(2023, 11, 6, 18, 30, 33, 662, DateTimeKind.Local).AddTicks(6701),
+                            Date = new DateTime(2023, 11, 7, 23, 42, 9, 52, DateTimeKind.Local).AddTicks(3738),
                             EmployeeId = 2,
                             EquipmentId = 2,
+                            Price = 0.0,
+                            Quantity = 5,
                             State = 1
                         });
                 });
@@ -86,12 +91,17 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Company ABC"
+                            Name = "Abbott Laboratories"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Company XYZ"
+                            Name = "Medical Technology Expo - BIOMED Silicon Valley"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Johnson & Johnson"
                         });
                 });
 
@@ -108,10 +118,15 @@ namespace HospitalLibrary.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.ToTable("Equipment");
 
@@ -120,15 +135,65 @@ namespace HospitalLibrary.Migrations
                         {
                             Id = 1,
                             CompanyId = 1,
-                            Name = "Equipment 1",
-                            Quantity = 0
+                            Name = "Shower Chair",
+                            Price = 43.0,
+                            Quantity = 150
                         },
                         new
                         {
                             Id = 2,
+                            CompanyId = 1,
+                            Name = "First Aid Kit",
+                            Price = 4.0,
+                            Quantity = 10
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CompanyId = 1,
+                            Name = "Wrist Brace Night Support",
+                            Price = 64.0,
+                            Quantity = 143
+                        },
+                        new
+                        {
+                            Id = 4,
                             CompanyId = 2,
-                            Name = "Equipment 2",
-                            Quantity = 0
+                            Name = "First Aid Kit",
+                            Price = 6.0,
+                            Quantity = 120
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CompanyId = 3,
+                            Name = "First Aid Kit",
+                            Price = 8.0,
+                            Quantity = 50
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CompanyId = 2,
+                            Name = "Shower Chair",
+                            Price = 876.0,
+                            Quantity = 15
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CompanyId = 3,
+                            Name = "Shower Chair",
+                            Price = 88.0,
+                            Quantity = 76
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CompanyId = 2,
+                            Name = "Wrist Brace Night Support",
+                            Price = 4.0,
+                            Quantity = 17
                         });
                 });
 
@@ -214,13 +279,30 @@ namespace HospitalLibrary.Migrations
                             CompanyId = 1,
                             Country = "USA",
                             Email = "kpetkovic279@gmail.com",
-                            FirstName = "John",
+                            FirstName = "Kristina",
                             Job = "Software Engineer",
-                            LastName = "Doe",
+                            LastName = "Petkovic",
                             Password = "kpetkovic279",
                             PhoneNumber = "123-456-7890",
                             UserRole = 0,
-                            Username = "user1"
+                            Username = "kpetkovic279"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Activated = true,
+                            CancelCount = 0,
+                            City = "New York",
+                            CompanyId = 2,
+                            Country = "USA",
+                            Email = "kpetkovic7@gmail.com",
+                            FirstName = "Bjanka",
+                            Job = "Software Test Engineer",
+                            LastName = "Tijodorovic",
+                            Password = "kpetkovic7",
+                            PhoneNumber = "123-456-7890",
+                            UserRole = 0,
+                            Username = "kpetkovic7"
                         },
                         new
                         {
@@ -231,9 +313,9 @@ namespace HospitalLibrary.Migrations
                             CompanyId = 0,
                             Country = "USA",
                             Email = "kpetkovic27@gmail.com",
-                            FirstName = "Jane",
+                            FirstName = "Jelena",
                             Job = "System Admin",
-                            LastName = "Smith",
+                            LastName = "Petkovic",
                             Password = "kpetkovic27",
                             PhoneNumber = "987-654-3210",
                             UserRole = 2,
@@ -245,17 +327,45 @@ namespace HospitalLibrary.Migrations
                             Activated = true,
                             CancelCount = 0,
                             City = "Los Angeles",
-                            CompanyId = 2,
+                            CompanyId = 1,
                             Country = "USA",
-                            Email = "kpetkovic18@gmail.com",
-                            FirstName = "Jane",
+                            Email = "admin2@gmail.com",
+                            FirstName = "Jelisaveta",
                             Job = "Company admin",
-                            LastName = "Smith",
+                            LastName = "Petrovic",
                             Password = "kpetkovic18",
                             PhoneNumber = "987-654-3210",
                             UserRole = 1,
-                            Username = "user2"
+                            Username = "company admin2"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Activated = true,
+                            CancelCount = 0,
+                            City = "Los Angeles",
+                            CompanyId = 2,
+                            Country = "USA",
+                            Email = "kpetkovic18@gmail.com",
+                            FirstName = "Milica",
+                            Job = "Company admin",
+                            LastName = "Petkovic",
+                            Password = "kpetkovic18",
+                            PhoneNumber = "987-654-3210",
+                            UserRole = 1,
+                            Username = "kpetkovic18"
                         });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Equipment", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
                 });
 #pragma warning restore 612, 618
         }

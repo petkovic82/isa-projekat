@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
@@ -41,5 +43,6 @@ namespace HospitalAPI.Controllers
             var result = _equipmentService.SearchByNameOrCompany(searchQuery);
             return Ok(result);
         }
+        
     }
 }

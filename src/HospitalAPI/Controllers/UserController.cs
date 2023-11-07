@@ -76,7 +76,7 @@ namespace HospitalAPI.Controllers
                 Country = dto.Country,
                 PhoneNumber = dto.PhoneNumber,
                 Job = dto.Job,
-                CompanyId = dto.CompanyId,
+                CompanyId = dto.CompanyId,// CompanyId= 0, //sistem admin nema kompaniju
                 Activated = false,
                 CancelCount = 0
             };
