@@ -43,7 +43,7 @@ namespace HospitalAPI.Controllers
                 Activated = user.Activated
             };
 
-            if (dto.Activated == false) return NotFound();
+            if (dto.Activated == false) return BadRequest("Activate your profile by clicking link in email!");
             return Ok(dto);
         }
         

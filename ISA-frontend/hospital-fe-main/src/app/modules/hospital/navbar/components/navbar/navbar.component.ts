@@ -9,6 +9,7 @@ import {TokenService} from "../../services/token.service";
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+
   private userType: number = -1;
   isToggled: boolean = false
   name: string = ''
@@ -49,6 +50,7 @@ export class NavbarComponent implements OnInit {
   }
 
   onLogout() {
+    this.tokenService.logout();
     localStorage.clear();
   }
 
@@ -56,18 +58,38 @@ export class NavbarComponent implements OnInit {
     this.isToggled = !this.isToggled;
   }
 
-  AppointmentsPatient() {
+  Companies() {
     this.router.navigate(['/appointments/patient/' + this.id])
   }
 
-  AppointmentsDoctor() {
+  Appointments() {
     this.router.navigate(['/appointments/doctor/' + this.id])
   }
 
-  Patients() {
+  RegisterSystemAdmin() {
     this.router.navigate(['/patients'])
   }
 
 
+  isLoggedUser() {
+    return Number(this.tokenService.getToken()) > 0;
+  }
+
+  Login() {
+    this.router.navigate(['/login'])
+  }
+
+  Register() {
+    this.router.navigate(['/register'])
+  }
+
+  Home() {
+    if(this.isLoggedUser()) {
+      this.router.navigate(['/landing'])
+    }
+    else{
+      this.router.navigate(['/'])
+    }
+  }
 }
 

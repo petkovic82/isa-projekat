@@ -1,0 +1,88 @@
+<router-outlet></router-outlet>
+<app-navbar></app-navbar>
+<div class="form-container">
+  <div class="logo-container">
+    Register now for a better experience!
+  </div>
+
+  <div class="line"></div>
+  <form class="form">
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input required="" placeholder="Enter your First Name" name="firstName" id="firstName" [(ngModel)]="firstName"
+             type="text">
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input required="" placeholder="Enter your Last Name" name="lastName" id="lastName" [(ngModel)]="lastName"
+             type="text">
+    </div>
+
+    <div class="form-group">
+      <label for="companyId">Company ID</label>
+      <mat-select [(ngModel)]="companyId" name="companyId" id="companyId">
+        <mat-option *ngFor="let c of company" [value]="c.id">{{ c.name }}</mat-option>
+      </mat-select>
+    </div>
+
+
+    <div class="form-group">
+      <label for="phoneNumber">Phone Number</label>
+      <input required="" placeholder="Enter your Phone Number" name="phoneNumber" id="phoneNumber"
+             [(ngModel)]="phoneNumber" type="text">
+    </div>
+
+    <div class="form-group">
+      <label for="job">Job</label>
+      <input required="" placeholder="Enter your Job" name="job" id="job" [(ngModel)]="job" type="text">
+    </div>
+
+    <div class="form-group">
+      <label for="country">Country</label>
+      <input required="" placeholder="Enter your Country" name="country" id="country" [(ngModel)]="country" type="text">
+    </div>
+
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input required="" placeholder="Enter your Username" name="username" id="username" [(ngModel)]="username"
+             type="text">
+    </div>
+
+    <div class="form-group">
+      <label for="city">City</label>
+      <input required="" placeholder="Enter your City" name="city" id="city" [(ngModel)]="city" type="text">
+    </div>
+
+    <div class="form-group">
+      <label for="role">Role</label>
+      <mat-select [(ngModel)]="role" name="role" id="role">
+        <mat-option *ngFor="let role of (systemAdminLoggedIn ? rolesWhenSystemAdmin : roles)" [value]="role.id">{{ role.name }}</mat-option>
+      </mat-select>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input required="" placeholder="Enter your email" name="email" id="email" [(ngModel)]="email" type="text">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input required="" name="password" placeholder="Enter your password" id="password" [(ngModel)]="password"
+             type="password">
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password</label>
+      <input required="" name="confirmPassword" placeholder="Confirm your password" id="confirmPassword"
+             [(ngModel)]="confirmPassword" type="password">
+    </div>
+    <div *ngIf="passwordsDoNotMatch">
+      <mat-error>Passwords do not match.</mat-error>
+    </div>
+    <button type="submit" (click)="register()" class="form-submit-btn">Register</button>
+  </form>
+
+
+</div>
+
+<app-footer></app-footer>

@@ -60,14 +60,14 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpPost("adminRegistration")]
-        [Authorize(Policy = "SystemAdminPolicy")]
+       // [Authorize(Policy = "SystemAdminPolicy")]
         public async Task<IActionResult> RegisterBySystemAdmin(RegistrationDto dto)
-        {
-            //mozda user da se registruje bez toga koja je firma,a company admin moze da dodeli samo kompaniju kojoj je admin 
+        { 
+          
             var newUser = new User
             {
                 Username = dto.Username,
-                UserRole = dto.Role,
+                UserRole = dto.UserRole,
                 Password = dto.Password,
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
@@ -76,17 +76,25 @@ namespace HospitalAPI.Controllers
                 Country = dto.Country,
                 PhoneNumber = dto.PhoneNumber,
                 Job = dto.Job,
-                CompanyId = dto.CompanyId,// CompanyId= 0, //sistem admin nema kompaniju
+                CompanyId = dto.CompanyId,
                 Activated = false,
                 CancelCount = 0
             };
+            
+            switch (dto.UserRole)
+            {
+                case Role.SystemAdmin:
+                    newUser.CompanyId = 0;
+                    break;
+                case Role.CompanyAdmin when _userService.FindCompanyAdmin(dto.CompanyId) != null:
+                    return BadRequest("Already registered admin for this company");
+            }
 
             if (_userService.ExistsByUsername(newUser.Username))
                 return BadRequest(
                     "Username are already taken.");
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            if (_userService.FindCompanyAdmin(dto.CompanyId) != null) return BadRequest(ModelState);
-
+         
             newUser.ConfirmationToken = Guid.NewGuid().ToString();
 
             _userService.Create(newUser);

@@ -1,4 +1,5 @@
-﻿ using System.Collections.Generic;
+﻿ using System;
+ using System.Collections.Generic;
 using System.Linq;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
@@ -17,13 +18,13 @@ namespace HospitalLibrary.Core.Repository
         public List<Equipment> SearchByNameOrCompany(string searchQuery)
         {
             return _context.Equipment
-                .Where(e => e.Name.Contains(searchQuery) || e.Company.Name.ToString() == searchQuery)
+                .Where(e => e.Name.Contains(searchQuery) || e.CompanyName.Contains(searchQuery))
                 .ToList();
         }
 
         public IEnumerable<Equipment> GetByCompanyId(int id)
         {
-            return _context.Equipment.Where(e => e.Company.Id == id);
+            return _context.Equipment.Where(e => e.CompanyId == id);
         }
 
         public IEnumerable<Equipment> GetAll()

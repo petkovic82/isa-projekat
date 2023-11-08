@@ -41,6 +41,14 @@ export class AuthService {
       .pipe(catchError(this.handleError));
   }
 
+  adminRegistration(register: DTORegistrationMedicalData): Observable<any> {
+    return this.http
+      .post<DTORegistrationMedicalData>("http://localhost:16177/api/users/adminRegistration", register, {
+        headers: this.headers,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
   logout() {
     this.http
       .get<LoginResponse>("http://localhost:8080/users/logout")

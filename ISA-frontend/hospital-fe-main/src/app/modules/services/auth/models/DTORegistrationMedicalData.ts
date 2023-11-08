@@ -10,29 +10,18 @@ export class DTORegistrationMedicalData {
   password: string = "";
   firstName: string = "";
   lastName: string = "";
-  role: number = 0;
+  userRole: number = 0;
   city: string = "";
   country: string = "";
   job: string = "";
-  phoneNumber: number = 0;
+  phoneNumber: string = "";
   companyId: number = 0;
   cancelCount: number = 0;
-
-
   name: string = "";
-  surname: string = "";
-  patientId: number = 0;
   id: number = 0;
   deleted: boolean = false;
-  userType: number = 0;
-  primaryCareDoctorId: number = 1;
   blocked: boolean = false;
-  bloodSugar: number = 0;
   enabled: boolean = true;
-  createdAt = new Date();
-  cycleStart: Date | undefined = new Date();
-  bloodPressure: string = "";
-  fatPercentage: number = 0.0;
   weight: number = 0.0;
 
   constructor(
@@ -41,11 +30,11 @@ export class DTORegistrationMedicalData {
     password: string,
     firstName: string,
     lastName: string,
-    role: number,
+    userRole: number,
     city: string,
     country: string,
     job: string,
-    phoneNumber: number,
+    phoneNumber: string,
     companyId: number,
     cancelCount: number
   ) {
@@ -54,7 +43,7 @@ export class DTORegistrationMedicalData {
     this.password = password;
     this.firstName = firstName;
     this.lastName = lastName;
-    this.role = role;
+    this.userRole = userRole;
     this.city = city;
     this.country = country;
     this.job = job;

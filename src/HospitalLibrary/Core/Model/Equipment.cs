@@ -11,6 +11,7 @@ namespace HospitalLibrary.Core.Model
         [ForeignKey("Company")]
         public int CompanyId { get; set; }
 
+        public string CompanyName { get; set; }
         public virtual Company Company { get; set; } 
         public string Name { get; set; }
         public int Quantity { get; set; }

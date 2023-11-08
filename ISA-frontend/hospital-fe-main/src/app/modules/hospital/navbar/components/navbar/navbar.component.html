@@ -1,41 +1,60 @@
 <header>
   <nav>
-    <div class="logo">Petkovic hospital</div>
-    <ul>
-      <li class="shrink" *ngIf="isLoggedEmployee()">
-        <a
-          (click)="AppointmentsPatient()"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }">My appointments</a>
-      </li>
-      <li class="shrink" *ngIf="isLoggedCompanyAdmin()">
-        <a
-          (click)="AppointmentsDoctor()"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }">My appointments</a>
-      </li>
-      <li class="shrink" *ngIf="isLoggedSystemAdmin()">
-        <a
-          (click)="Patients()"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >All Patients</a
-        >
-      </li>
-    </ul>
-    <button (click)="onToggle()"> toggle</button>
+    <div class="logo" (click)="Home()">Health Gear Hub</div>
+    <ng-container *ngIf="isLoggedUser()">
+      <ul>
+        <li class="shrink" *ngIf="isLoggedEmployee()">
+          <a
+            (click)="Companies()"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">Companies</a>
+        </li>
+        <li class="shrink" *ngIf="isLoggedCompanyAdmin()">
+          <a
+            (click)="Appointments()"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">My appointments</a>
+        </li>
+        <li class="shrink" *ngIf="isLoggedSystemAdmin()">
+          <a
+            (click)="RegisterSystemAdmin()"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >Register</a
+          >
+        </li>
+      </ul>
 
-    <div [ngClass]="isToggled ? 'open-menu ' : 'sub-menu-wrap'">
-      <div class="sub-menu">
-        <div class="user-info">
-          <h2>{{ name }}</h2>
+      <button (click)="onToggle()"> toggle</button>
+      <div [ngClass]="isToggled ? 'open-menu ' : 'sub-menu-wrap'">
+        <div class="sub-menu">
+          <div class="user-info">
+            <h2>{{ name }}</h2>
+          </div>
+          <hr/>
+          <a (click)="onLogout()" href="#" class="sub-menu-link red">
+            <p>Logout</p>
+            <span>></span>
+          </a>
         </div>
-        <hr/>
-        <a (click)="onLogout()" href="#" class="sub-menu-link red">
-          <p>Logout</p>
-          <span>></span>
-        </a>
       </div>
-    </div>
+    </ng-container>
+    <ng-container *ngIf="!isLoggedUser()">
+      <ul>
+        <li class="shrink" >
+          <a
+            (click)="Login()"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">LOG IN</a>
+        </li>
+        <li class="shrink">
+          <a
+            (click)="Register()"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">REGISTER</a>
+        </li>
+
+      </ul>
+    </ng-container>
   </nav>
 </header>

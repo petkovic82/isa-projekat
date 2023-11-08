@@ -6,6 +6,8 @@ import {MaterialModule} from "src/app/material/material.module";
 import {AppointmentFormComponent} from './appointment/appointment-form/appointment-form.component';
 import {NavbarModule} from "./navbar/navbar.module";
 import {AppointmentsPatientComponent} from './appointment/appointments-patient/appointments-patient.component';
+import { FooterComponent } from './footer/footer.component';
+import { DialogComponent } from './dialog/dialog.component';
 
 
 const routes: Routes = [
@@ -17,6 +19,8 @@ const routes: Routes = [
   declarations: [
     AppointmentFormComponent,
     AppointmentsPatientComponent,
+    FooterComponent,
+    DialogComponent,
   ],
   imports: [
     CommonModule,
@@ -26,7 +30,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     NavbarModule
   ],
-  exports: [RouterModule]
+  exports: [RouterModule, FooterComponent]
 })
 export class HospitalModule {
 }

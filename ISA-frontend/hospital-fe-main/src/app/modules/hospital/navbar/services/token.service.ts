@@ -10,7 +10,6 @@ export class TokenService {
 
   logout(): void {
     localStorage.setItem("token", "")
-    console.log(localStorage.getItem("token"));
   }
 
   getToken(): string | null {
