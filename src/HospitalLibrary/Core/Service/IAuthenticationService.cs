@@ -4,6 +4,6 @@ namespace HospitalLibrary.Core.Service
 {
     public interface IAuthenticationService
     {
-        Tokens Authenticate(string name, Role r);
+        Tokens Authenticate(int userId, string name, Role r);
     }
 }

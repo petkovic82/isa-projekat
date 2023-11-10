@@ -66,4 +66,10 @@ export class ServiceService {
 
   searchCompanies(searchQuery: string) {
     this.companyService.searchCompaniesByName(searchQuery).subscribe((companies) => {}); }*/
+  searchEquipmentByNameInCompany(searchEquipment: string, companyId: any) : Observable<any> {
+    return this.http.get(`${this.baseUrl}/equipment/search${companyId}?searchQuery=${searchEquipment}`);
+  }
+  getEquipmentById(companyId: any):any {
+    return this.http.get(`${this.baseUrl}/equipment/${companyId}`);
+  }
 }

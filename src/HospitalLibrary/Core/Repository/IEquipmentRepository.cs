@@ -12,5 +12,6 @@ namespace HospitalLibrary.Core.Repository
         void Delete(Equipment room);
         List<Equipment> SearchByNameOrCompany(string searchQuery);
         IEnumerable<Equipment> GetByCompanyId(int id);
+        List<Equipment> SearchByNameInCompany(string searchQuery, int companyId);
     }
 }

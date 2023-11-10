@@ -2,6 +2,7 @@
 {
     public enum State
     {
-        Done, InProgress, Canceled
+        Done, InProgress, Canceled,
+        Created
     }
 }

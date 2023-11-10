@@ -25,7 +25,7 @@ namespace HospitalAPI.Controllers
         {
             var user = _userService.GetByUsernameAndPassword(authenticationDto.Username, authenticationDto.Password);
             if (user == null) return BadRequest("Username or password is incorrect");
-            var token = _authenticationService.Authenticate(user.FirstName, user.UserRole);
+            var token = _authenticationService.Authenticate(user.Id,user.FirstName, user.UserRole);
 
             var role = user.UserRole switch
             {

@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/auth/services/auth.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserServiceService} from "../../../services/user.service.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {DTOAppointment} from "../../../model/room.model";
 import {AppointmentService} from "../../../services/appointment.service";
 import {TokenService} from "../../navbar/services/token.service";
+import {ServiceService} from "../../../services/service.service";
 
 
 @Component({
@@ -24,7 +25,7 @@ export class AppointmentFormComponent implements OnInit {
   patient: any;
   doctors = [
     {id: '1', name: 'Ana Kesic'},];
-  priorities = [
+  termin = [
     {id: '1', name: 'Time is priority'},
     {id: '2', name: 'Doctor is priority'},];
 
@@ -33,16 +34,31 @@ export class AppointmentFormComponent implements OnInit {
   public displayedColumns = ['date'];
   private user: any;
   private appointment: DTOAppointment = new DTOAppointment();
+  private equipmentId: any;
+  equipment: any;
+  quantity: any; //max da bude equipmnt.quantity
 
   constructor(private authService: AuthService,
               private appointmentService: AppointmentService,
-              private router: Router, private userService: UserServiceService,
+              private router: ActivatedRoute, private userService: UserServiceService,
+              private service: ServiceService,
               private ts: TokenService) {
   }
 
-
   ngOnInit(): void {
     this.id = Number(this.ts.getIdFromToken());
+    this.router.params.subscribe(params => {
+      this.equipmentId = params['id'];
+    })
+    this.service.getEquipmentById( this.equipmentId).subscribe({
+        next: (res: any) => {
+          this.equipment = res;
+        },
+        error: (err: any) => {
+          console.log(err);
+        }
+      });
+
     // this.userService.getPatientById(this.id).subscribe({
     //   next: res => {
     //     this.user = res;
@@ -55,9 +71,6 @@ export class AppointmentFormComponent implements OnInit {
     // });
   }
 
-  chooseTime(object: Object) {
-
-  }
 
   Generate() {
 

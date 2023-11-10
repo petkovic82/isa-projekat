@@ -14,17 +14,14 @@ import {LoginRequest} from "../../services/auth/dtos/login-request";
 })
 export class LogInComponent implements OnInit {
 
-  user: LoginRequest;
-
+  username: string = ''
+  password: string = ''
   loginForm!: FormGroup;
   isExist: boolean = false;
+  private user: LoginRequest = new LoginRequest('','') ;
 
   constructor(private authService: AuthService,
               private router: Router) {
-    this.user = {
-      username: '',
-      password: ''
-    }
   }
 
 
@@ -35,36 +32,11 @@ export class LogInComponent implements OnInit {
     })
   }
 
-  username: string = ''
+  Login() {
+    this.user.password = this.password
+    this.user.username = this.username
 
-  login() {
-    console.log(this.user)
-    this.authService.signIn(this.user).subscribe({
-      next: data => {
-
-        this.isExist = false;
-
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("role", data.role);
-
-        if (data.role === 1) {
-          this.router.navigate(['/blog'])
-        } else {
-          if (data.role == 2)
-            this.router.navigate(['/patients'])
-        }
-
-        this.router.navigate(['/appointment-create'])
-      }, error: error => {
-        console.log(error)
-        if (error['status'] == 403) {
-          this.isExist = true;
-        }
-        if (error['status'] == 404) {
-          alert('You have to finnish registration ')
-        }
-      }
-    });
+    this.authService.signIn(this.user)
 
   }
 

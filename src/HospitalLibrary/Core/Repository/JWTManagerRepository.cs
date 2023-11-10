@@ -17,7 +17,7 @@ namespace HospitalLibrary.Core.Repository
             _iconfiguration = iconfiguration;
         }
 
-        public Tokens Authenticate(string name, Role r)
+        public Tokens Authenticate(int userId, string name, Role r)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.UTF8.GetBytes(_iconfiguration["JWT:Key"]);
@@ -25,6 +25,7 @@ namespace HospitalLibrary.Core.Repository
             {
                 Subject = new ClaimsIdentity(new[]
                 {
+                    new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
                     new(ClaimTypes.Name, name),
                     new Claim(ClaimTypes.Role, r.ToString())
                 }),

@@ -44,5 +44,22 @@ namespace HospitalAPI.Controllers
             return Ok(result);
         }
         
+        //samo sme employee
+        [AllowAnonymous]
+        [HttpGet("search{companyId}")]
+        public ActionResult<List<Equipment>> SearchByNameInCompany(string searchQuery, int companyId)
+        {
+            var result = _equipmentService.SearchByNameInCompany(searchQuery, companyId);
+            return Ok(result);
+        }
+        
+        // [Authorize]
+        [HttpGet("{id}")]
+        public ActionResult GetById(int id)
+        {
+            var user = _equipmentService.GetById(id);
+            if (user == null) return NotFound();
+            return Ok(user);
+        }
     }
 }

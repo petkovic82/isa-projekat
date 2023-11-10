@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Threading.Tasks;
+using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using MailKit.Net.Smtp;
 using MailKit.Security;
@@ -15,13 +16,12 @@ namespace HospitalLibrary.Core.Service
     {
         private readonly MailSettings _mailSettings;
 
-        public EmailService(IOptions<MailSettings> mailSettings)
+        private readonly QrGenerator _generator;
+        public EmailService(IOptions<MailSettings> mailSettings, QrGenerator generator)
         {
             _mailSettings = mailSettings.Value;
+            _generator = generator;
         }
-
-       
-        
 
 
         public async Task<bool> SendConfirmationEMail(string mail, string name, string token)
@@ -31,7 +31,8 @@ namespace HospitalLibrary.Core.Service
                 var mailText = "Hello [username],\n\n" +
                                "Thank you for registering with us. " +
                                "Please click the following link to confirm your registration: [confirmation_link]";
-                mailText = mailText.Replace("[username]", name).Replace("[confirmation_link]", GetConfirmationLink(token));
+                mailText = mailText.Replace("[username]", name)
+                    .Replace("[confirmation_link]", GetConfirmationLink(token));
 
                 var email = new MimeMessage();
                 email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
@@ -57,49 +58,73 @@ namespace HospitalLibrary.Core.Service
             }
         }
 
-        // public async Task<bool> AppointmentConfirmationMail(string mail, Bitmap qrCodeImage)
-        // {
-        //     try
-        //     {
-        //         const string mailText = "Hello,\n\n" +
-        //                                 "Thank you for registering with us. " ;
-        //        
-        //         var email = new MimeMessage();
-        //         email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
-        //         email.To.Add(MailboxAddress.Parse(mail));
-        //         email.Subject = $"Hello";
-        //
-        //         var builder = new BodyBuilder();
-        //         builder.HtmlBody = mailText;
-        //
-        //         // Convert the Bitmap image to a byte array
-        //         using var stream = new MemoryStream();
-        //         qrCodeImage.Save(stream, ImageFormat.Png); // Adjust the image format as needed
-        //         var imageBytes = stream.ToArray();
-        //
-        //         // Add the QR code image as an attachment
-        //         builder.Attachments.Add("qrcode.png", imageBytes, ContentType.Parse("image/png"));
-        //
-        //         email.Body = builder.ToMessageBody();
-        //
-        //         using var smtp = new SmtpClient();
-        //         await smtp.ConnectAsync(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-        //         await smtp.AuthenticateAsync(_mailSettings.Mail, _mailSettings.Password);
-        //         await smtp.SendAsync(email);
-        //         await smtp.DisconnectAsync(true);
-        //
-        //         return true;
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Console.WriteLine($"Failed to send email: {ex.Message}");
-        //         return false;
-        //     }
-        // }
-        //
-        private static string GetConfirmationLink(string token)
+        public async Task<bool> SendQrMail(string userEmail, string userFirstName, AppointmentDto dto)
         {
-            return $"http://localhost:16177/api/Users/confirmRegistration?token={token}";
+           
+            try
+            {
+                var mailText = "Hello [userFirstName],\n\n" +
+                                        "Thank you for booking appointment. Your appointment ID is [appointmentId]." +
+                                        "Equipment name [equipmentName] with ID [equipmentId] - quantity [quantity]." +
+                                        "Total price is [price]" +
+                                        "Date of appointent : [date]";
+                
+                mailText = mailText.Replace("[userFirstName]", userFirstName)
+                    .Replace("[appointmentId]", dto.Id.ToString())
+                    .Replace("[equipmentName]", dto.EquipmentName)
+                    .Replace("[equipmentId]", dto.EquipmentId.ToString())
+                    .Replace("[quantity]", dto.Quantity.ToString())
+                    .Replace("[price]", dto.Price.ToString())
+                    .Replace("[date]", dto.Date.ToString("yyyy-MM-dd HH:mm:ss"));
+                
+                var email = new MimeMessage();
+                email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
+                email.To.Add(MailboxAddress.Parse(userEmail));
+                email.Subject = $"Hello";
+
+                var builder = new BodyBuilder();
+                builder.HtmlBody = mailText;
+
+                // Generate QR code
+                var qrCodeBitmap = _generator.GenerateQrCode(dto);
+
+                // Convert QR code Bitmap to byte array
+                var stream = new MemoryStream();
+                qrCodeBitmap.Save(stream, ImageFormat.Png);
+                stream.Position = 0;
+
+                // Attach QR code to the email
+                var attachment = new MimePart("image", "png")
+                {
+                    Content = new MimeContent(stream),
+                    ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
+                    ContentTransferEncoding = ContentEncoding.Base64,
+                    FileName = "qr_code.png"
+                };
+
+                builder.Attachments.Add(attachment);
+                email.Body = builder.ToMessageBody();
+
+                using var smtp = new SmtpClient();
+                await smtp.ConnectAsync(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
+                await smtp.AuthenticateAsync(_mailSettings.Mail, _mailSettings.Password);
+                await smtp.SendAsync(email);
+                await smtp.DisconnectAsync(true);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to send email: {ex.Message}");
+                return false;
+            }
         }
+
+
+        private static string GetConfirmationLink(string token)
+    {
+        return $"http://localhost:16177/api/Users/confirmRegistration?token={token}";
     }
+}
+
 }

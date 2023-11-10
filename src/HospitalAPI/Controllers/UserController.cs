@@ -127,7 +127,7 @@ namespace HospitalAPI.Controllers
         }
 
 
-        [Authorize]
+       // [Authorize]
         [HttpGet("getCurrentUser")]
         public ActionResult GetCurrentUser(int id)
         {

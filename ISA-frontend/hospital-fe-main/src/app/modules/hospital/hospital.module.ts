@@ -8,6 +8,8 @@ import {NavbarModule} from "./navbar/navbar.module";
 import {AppointmentsPatientComponent} from './appointment/appointments-patient/appointments-patient.component';
 import { FooterComponent } from './footer/footer.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { CompaniesEmployeeComponent } from './companies-employee/companies-employee.component';
+import { CompanyEquipmentComponent } from './company-equipment/company-equipment.component';
 
 
 const routes: Routes = [
@@ -21,6 +23,8 @@ const routes: Routes = [
     AppointmentsPatientComponent,
     FooterComponent,
     DialogComponent,
+    CompaniesEmployeeComponent,
+    CompanyEquipmentComponent,
   ],
   imports: [
     CommonModule,

@@ -10,5 +10,7 @@ namespace HospitalLibrary.Core.Service
         public List<Equipment> SearchByNameOrCompany(string searchQuery);
         
         IEnumerable<Equipment> GetByCompanyId(int id);
+        public List<Equipment> SearchByNameInCompany(string searchQuery, int companyId);
+        object? GetById(int id);
     }
 }

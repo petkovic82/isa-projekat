@@ -4,10 +4,12 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {LoginResponse} from "../dtos/login-response";
 import {Router} from "@angular/router";
 import {Token} from "../models/token";
-import {Observable, Subject, throwError} from "rxjs";
+import {Observable, Subject, Subscription, throwError} from "rxjs";
 import {DTORegistrationMedicalData} from "../models/DTORegistrationMedicalData";
 import {catchError} from "rxjs/operators";
 import jwtDecode from "jwt-decode";
+import {Users} from "../models/users";
+import {TokenService} from "../../../hospital/navbar/services/token.service";
 
 @Injectable({
   providedIn: "root",
@@ -22,16 +24,54 @@ export class AuthService {
   private token$: Subject<string | null> = new Subject();
   private token: string | null = null;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private ts: TokenService) {
     this.loadAuth();
   }
 
-  signIn(signInRequest: any): Observable<any> {
-    return this.http.post<any>(
-      "http://localhost:16177/api/Authentication/login",
-      signInRequest
-    );
+  signIn(signInRequest: any): Subscription {
+    return this.http.post<any>("http://localhost:16177/api/Authentication/login", signInRequest)
+      .pipe(
+        catchError(this.handleError),
+      )
+      .subscribe((response: any) => {
+        if (response) {
+          console.log(response)
+
+          this.saveUserAndToken(response);
+  //        this.extractUsers(response);
+          this.router.navigate(['/landing'])
+        }
+      });
   }
+
+
+  loadAuth() {
+    if (this.token && this.user) {
+      return;
+    }
+    this.loadUser();
+    this.loadToken();
+  }
+
+
+  private saveUserAndToken(response: LoginResponse) {
+    const token = response.token;
+    const id = response.id;
+    const role = response.role;
+    //const user = this.extractUsers(response);
+    const decodedToken: Token = jwtDecode(token);
+   console.log(decodedToken.nameid)
+    window.sessionStorage.setItem("token", token);
+    window.sessionStorage.setItem("id",String(id));
+    window.sessionStorage.setItem("role", String(role));
+
+
+    this.token = token;
+    this.token$.next(this.token);
+
+    this.user$.next(this.user);
+  }
+
 
   register(register: DTORegistrationMedicalData): Observable<any> {
     return this.http
@@ -49,23 +89,6 @@ export class AuthService {
       .pipe(catchError(this.handleError));
   }
 
-  logout() {
-    this.http
-      .get<LoginResponse>("http://localhost:8080/users/logout")
-      .subscribe({
-        next: (response) => {
-          this.clearAuthAndRedirectHome();
-        },
-        error: (error: Error) => {
-          this.clearAuthAndRedirectHome();
-        },
-      });
-  }
-
-  loadAuth() {
-    this.loadUser();
-    this.loadToken();
-  }
 
   clearAuth() {
     this.clearUser();
@@ -76,30 +99,19 @@ export class AuthService {
     return this.token;
   }
 
-  isAuthenticated() {
-    return true;
-  }
-
   isCompanyAdmin() {
-    return this.user != null && this.user.roles.includes("COMPANYADMIN");
+    return this.ts.getRole() === "1";
   }
 
   isEmployee() {
-    return this.user != null && this.user.roles.includes("EMPLOYEE");
+    return this.ts.getRole() === "0";
   }
 
   isSystemAdmin() {
-    return this.user != null && this.user.roles.includes("SYSTEMADMIN");
+    return this.ts.getRole() === "2";
   }
 
-  getRole() {
-    if (this.isCompanyAdmin()) return "COMPANYADMIN";
-    else if (this.isEmployee()) return "EMPLOYEE";
-    if (this.isSystemAdmin()) return "SYSTEMADMIN";
-    else return "No role";
-  }
-
-  private clearAuthAndRedirectHome() {
+  clearAuthAndRedirectHome() {
     this.clearAuth();
     this.redirectHome();
   }
@@ -112,15 +124,7 @@ export class AuthService {
     return new User(decodedToken.sub, authorities);
   }
 
-  private tokenValid(): boolean {
-    if (!this.token) return true;
-    const decodedToken: Token = jwtDecode(this.token);
 
-    const expirationDate = new Date((decodedToken.exp as number) * 1000);
-    const currentDate = new Date();
-
-    return currentDate > expirationDate;
-  }
 
   private loadUser() {
     const user = window.sessionStorage.getItem("user");
@@ -145,6 +149,8 @@ export class AuthService {
 
   private clearUser() {
     window.sessionStorage.removeItem("user");
+    window.sessionStorage.removeItem("id");
+    window.sessionStorage.removeItem("role");
     this.user = null;
     this.user$.next(this.user);
   }
@@ -161,6 +167,9 @@ export class AuthService {
       errorMessage = `An error occurred: ${err.error.message}`;
     } else {
       errorMessage = `Backend returned code ${err.status}: ${err.body.error}`;
+    }
+    if (err['status'] == 404) {
+      alert('You have to finnish registration ')
     }
     console.error(err);
     return throwError(() => errorMessage);

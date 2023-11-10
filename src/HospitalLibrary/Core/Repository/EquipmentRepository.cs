@@ -27,6 +27,13 @@ namespace HospitalLibrary.Core.Repository
             return _context.Equipment.Where(e => e.CompanyId == id);
         }
 
+        public List<Equipment> SearchByNameInCompany(string searchQuery, int companyId)
+        {
+            return _context.Equipment
+                .Where(e => e.Name.Contains(searchQuery) && e.CompanyId == companyId)
+                .ToList();
+        }
+
         public IEnumerable<Equipment> GetAll()
         {
             return _context.Equipment.ToList();

@@ -17,10 +17,11 @@ export class LandingPageComponent implements OnInit {
               private router: Router, private ts: TokenService,
               private Service: ServiceService) {
   }
+
   ngOnInit(): void {
-    this.Service.getCurrentUser(Number(this.ts.getIdFromToken())).subscribe((user) => {
-      user.firstName = this.firstName;
-      user.lastName = this.lastName;
+    this.Service.getCurrentUser(Number(this.ts.getId())).subscribe((user) => {
+      this.firstName = user.firstName ;
+      this.lastName = user.lastName ;
     });
   }
 

@@ -19,15 +19,4 @@ export class ProfileServiceTsService {
     return this.http.get(this.baseUrl + '/getUserByID/' + id, {headers: this.headers});
   }
 
-  getCurrentUser(): Observable<User> {
-    let headers = new HttpHeaders({
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + localStorage.getItem("token"),
-    });
-    let options = {headers: headers};
-    console.log(localStorage.getItem("token"))
-    return this.http.get<User>(this.baseUrl + '/current', options);
-  }
-
-
 }

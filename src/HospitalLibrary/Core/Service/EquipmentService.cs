@@ -32,6 +32,15 @@ namespace HospitalLibrary.Core.Service
             return _equipmentRepository.GetByCompanyId(id);
         }
 
-        
+        public List<Equipment> SearchByNameInCompany(string searchQuery, int companyId)
+        {
+            return _equipmentRepository.SearchByNameInCompany(searchQuery,companyId);
+
+        }
+
+        public object GetById(int id)
+        {
+            return _equipmentRepository.GetById(id);
+        }
     }
 }

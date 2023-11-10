@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient} from "@angular/common/http";
 import {TokenService} from "../../services/token.service";
+import {AuthService} from "../../../../services/auth/services/auth.service";
 
 @Component({
   selector: 'app-navbar',
@@ -19,18 +20,24 @@ export class NavbarComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private tokenService: TokenService,
-    private router: Router) {
+    private router: Router,
+    private auth: AuthService) {
   }
 
   token = localStorage.getItem("token")
   email: string = '';
+  loggedOut: boolean = true;
 
   ngOnInit(): void {
 
-    this.id = Number(this.tokenService.getIdFromToken());
+    this.id = Number(this.tokenService.getId());
     this.email = this.tokenService.getEmailFromToken();
-    this.userType = Number(this.tokenService.getRoleFromToken());
+    this.userType = Number(this.tokenService.getRole());
 
+  }
+
+  LoggedRole(): string | null {
+    return this.tokenService.getRole();
   }
 
   isLoggedEmployee(): boolean {
@@ -45,13 +52,10 @@ export class NavbarComponent implements OnInit {
     return this.userType == 2;
   }
 
-  onHome() {
-    this.router.navigate(['/'])
-  }
-
   onLogout() {
-    this.tokenService.logout();
+    this.auth.clearAuthAndRedirectHome();
     localStorage.clear();
+    this.loggedOut = true;
   }
 
   onToggle() {
@@ -59,7 +63,7 @@ export class NavbarComponent implements OnInit {
   }
 
   Companies() {
-    this.router.navigate(['/appointments/patient/' + this.id])
+    this.router.navigate(['/companies/employee/' + this.id])
   }
 
   Appointments() {
@@ -72,7 +76,7 @@ export class NavbarComponent implements OnInit {
 
 
   isLoggedUser() {
-    return Number(this.tokenService.getToken()) > 0;
+    return this.auth.getToken() !== null;
   }
 
   Login() {

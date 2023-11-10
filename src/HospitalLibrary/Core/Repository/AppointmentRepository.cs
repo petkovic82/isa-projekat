@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,22 @@ namespace HospitalLibrary.Core.Repository
         {
             _context.Appointments.Remove(room);
             _context.SaveChanges();
+        }
+
+        public object GetCreatedByEquipmentId(int id)
+        {
+            return _context.Appointments.Where(a => a.EquipmentId == id && a.State == State.Created);
+        }
+        public object GetByEmployeeId(int id)
+        {
+            return _context.Appointments.Where(a => a.EmployeeId == id);
+        }
+
+        public object FindByEmployeeIdAndTime(AppointmentDto dto)
+        {
+            return _context.Appointments.Where(a => a.EmployeeId == dto.EmployeeId 
+                                                    && a.Date == dto.Date).ToList();
+
         }
     }
 }

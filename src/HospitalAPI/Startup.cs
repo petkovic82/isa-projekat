@@ -50,7 +50,7 @@ namespace HospitalAPI
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IEquipmentService, EquipmentService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
-            services.AddScoped<QRGenerator>();
+            services.AddScoped<QrGenerator>();
 
             services.AddCors(options =>
             {
