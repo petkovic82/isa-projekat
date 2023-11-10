@@ -3,40 +3,42 @@
     <div class="logo" (click)="Home()">Health Gear Hub</div>
     <ng-container *ngIf="isLoggedUser()">
       <ul>
-        <li class="shrink" *ngIf="isLoggedEmployee()">
-          <a
-            (click)="Companies()"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }">Companies</a>
-        </li>
-        <div *ngIf="isLoggedCompanyAdmin()">
-          <li class="shrink" >
+        <div *ngIf="isLoggedEmployee()">
+          <li class="shrink">
+            <a
+              (click)="Companies()"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }">Companies</a>
+          </li>
+          <li class="shrink">
             <a
               (click)="Appointments()"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }">My appointments</a>
           </li>
+        </div>
+        <div *ngIf="isLoggedCompanyAdmin()">
           <li class="shrink">
             <a
               (click)="CreateAppointment()"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }">Create new</a>
           </li>
-
+        </div>
+        <div *ngIf="isLoggedSystemAdmin()">
+          <li class="shrink">
+            <a
+              (click)="Register()"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >Register</a
+            >
+          </li>
         </div>
 
-
-        <li class="shrink" *ngIf="isLoggedSystemAdmin()">
-          <a
-            (click)="RegisterSystemAdmin()"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >Register</a
-          >
-        </li>
       </ul>
 
-      <button (click)="onToggle()"> toggle</button>
+      <button (click)="onToggle()"> <mat-icon>flag</mat-icon></button>
       <div [ngClass]="isToggled ? 'open-menu ' : 'sub-menu-wrap'">
         <div class="sub-menu">
           <div class="user-info">
@@ -52,7 +54,7 @@
     </ng-container>
     <ng-container *ngIf="!isLoggedUser()">
       <ul>
-        <li class="shrink" >
+        <li class="shrink">
           <a
             (click)="Login()"
             routerLinkActive="active"

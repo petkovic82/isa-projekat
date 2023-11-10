@@ -6,8 +6,7 @@
         public string Username { get; set; }
         public int Role { get; set; }
         public string Token { get; set; }
-        
+
         public bool Activated { get; set; }
-        
     }
 }

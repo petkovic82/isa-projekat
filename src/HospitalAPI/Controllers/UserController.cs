@@ -60,10 +60,9 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpPost("adminRegistration")]
-       // [Authorize(Policy = "SystemAdminPolicy")]
+        // [Authorize(Policy = "SystemAdminPolicy")]
         public async Task<IActionResult> RegisterBySystemAdmin(RegistrationDto dto)
-        { 
-          
+        {
             var newUser = new User
             {
                 Username = dto.Username,
@@ -80,7 +79,7 @@ namespace HospitalAPI.Controllers
                 Activated = false,
                 CancelCount = 0
             };
-            
+
             switch (dto.UserRole)
             {
                 case Role.SystemAdmin:
@@ -94,7 +93,7 @@ namespace HospitalAPI.Controllers
                 return BadRequest(
                     "Username are already taken.");
             if (!ModelState.IsValid) return BadRequest(ModelState);
-         
+
             newUser.ConfirmationToken = Guid.NewGuid().ToString();
 
             _userService.Create(newUser);
@@ -127,7 +126,7 @@ namespace HospitalAPI.Controllers
         }
 
 
-       // [Authorize]
+        // [Authorize]
         [HttpGet("getCurrentUser")]
         public ActionResult GetCurrentUser(int id)
         {

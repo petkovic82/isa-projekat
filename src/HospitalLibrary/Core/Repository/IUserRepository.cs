@@ -10,7 +10,6 @@ namespace HospitalLibrary.Core.Repository
         User GetByUsernameAndPassword(string username, string password);
         void Create(User user);
         void Update(User user);
-        void Delete(User user);
         public User FindCompanyAdmin(int companyId);
         User GetUserByConfirmationToken(string token);
     }

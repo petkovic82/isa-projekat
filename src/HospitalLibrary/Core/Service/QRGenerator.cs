@@ -1,14 +1,12 @@
 ﻿using System.Drawing;
 using HospitalLibrary.Core.DTOs;
 using QRCoder;
-using ZXing.QrCode.Internal;
 using QRCode = QRCoder.QRCode;
 
 namespace HospitalLibrary.Core.Service
 {
-    public class QrGenerator 
+    public class QrGenerator
     {
-    
         public Bitmap GenerateQrCode(AppointmentDto appointment)
         {
             var appointmentInfo = $"Appointment Details:\n" +
@@ -28,7 +26,5 @@ namespace HospitalLibrary.Core.Service
             var qrCode = new QRCode(qrCodeData);
             return qrCode.GetGraphic(20);
         }
-
     }
-    
 }

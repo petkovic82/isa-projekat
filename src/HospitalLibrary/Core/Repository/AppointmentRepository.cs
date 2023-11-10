@@ -15,10 +15,7 @@ namespace HospitalLibrary.Core.Repository
         {
             _context = context;
         }
-        public IEnumerable<Appointment> GetAll()
-        {
-            return _context.Appointments.ToList();
-        }
+        
 
         public Appointment GetById(int id)
         {
@@ -36,17 +33,13 @@ namespace HospitalLibrary.Core.Repository
             _context.Entry(room).State = EntityState.Modified;
             _context.SaveChanges();
         }
-
-        public void Delete(Appointment room)
-        {
-            _context.Appointments.Remove(room);
-            _context.SaveChanges();
-        }
+        
 
         public object GetCreatedByEquipmentId(int id)
         {
             return _context.Appointments.Where(a => a.EquipmentId == id && a.State == State.Available);
         }
+
         public object GetByEmployeeId(int id)
         {
             return _context.Appointments.Where(a => a.EmployeeId == id);
@@ -54,9 +47,8 @@ namespace HospitalLibrary.Core.Repository
 
         public object FindByEmployeeIdAndTime(AppointmentDto dto)
         {
-            return _context.Appointments.Where(a => a.EmployeeId == dto.EmployeeId 
+            return _context.Appointments.Where(a => a.EmployeeId == dto.EmployeeId
                                                     && a.Date == dto.Date).ToList();
-
         }
     }
 }

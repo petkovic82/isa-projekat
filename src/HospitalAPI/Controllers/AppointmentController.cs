@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using FluentResults;
 using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
 {
-    
     [Route("api/[controller]")]
     [ApiController]
     public class AppointmentController : ControllerBase
@@ -17,7 +15,7 @@ namespace HospitalAPI.Controllers
         private readonly IEmailService _emailService;
         private readonly IUserService _userService;
         private readonly IEquipmentService _equipmentService;
-        
+
         public AppointmentController(IAppointmentService appointmentService, IEmailService emailService,
             IUserService userService,
             IEquipmentService equipmentService)
@@ -27,8 +25,8 @@ namespace HospitalAPI.Controllers
             _emailService = emailService;
             _equipmentService = equipmentService;
         }
-        
-     
+
+
         // [Authorize]
         [HttpGet("{id}")]
         public ActionResult GetCreatedByEquipmentId(int id)
@@ -37,8 +35,8 @@ namespace HospitalAPI.Controllers
             if (user == null) return NotFound();
             return Ok(user);
         }
-        
-        
+
+
         // [Authorize]
         [HttpGet("employee{id}")]
         public ActionResult GetByEmployeeId(int id)
@@ -47,49 +45,54 @@ namespace HospitalAPI.Controllers
             if (user == null) return NotFound();
             return Ok(user);
         }
-        
+
         [HttpPut("book")]
         // [Authorize(Policy = "EmployeePolicy")]
         public async Task<IActionResult> Book(AppointmentDto dto)
         {
-            if (_appointmentService.CanEmployeeBook(dto) ==  false)
+            if (_appointmentService.CanEmployeeBook(dto) == false)
                 return BadRequest(
                     "Cant book in same company at the same time");
-            
-            var app =_appointmentService.GetById(dto.Id);
+
+            var app = _appointmentService.GetById(dto.Id);
             var equipment = (Equipment)_equipmentService.GetById(dto.EquipmentId);
             var user = _userService.GetById(dto.EmployeeId);
-            
+
             app.EmployeeId = dto.EmployeeId;
             app.State = State.Booked;
             app.Quantity = dto.Quantity;
-            
-            app.Price = equipment.Price * app.Quantity;
 
-            if (equipment != null) dto.EquipmentName = equipment.Name;
-            
-            _appointmentService.Update(app);
-            
-            dto.EmployeeFullName = user.FirstName + ' '+ user.LastName;
+            if (equipment != null)
+            {
+                app.Price = equipment.Price * app.Quantity;
+
+                equipment.Quantity -= app.Quantity;
+                dto.EquipmentName = equipment.Name;
+
+                _appointmentService.Update(app);
+                _equipmentService.Update(equipment);
+            }
+
+            dto.EmployeeFullName = user.FirstName + ' ' + user.LastName;
             dto.Price = app.Price;
             dto.State = app.State;
             var isEmailSent =
-             await _emailService.SendQrMail(user.Email, user.FirstName, dto);
-             Console.WriteLine(isEmailSent ? "Email sent successfully." : "Email sending failed.");
-             
+                await _emailService.SendQrMail(user.Email, user.FirstName, dto);
+            Console.WriteLine(isEmailSent ? "Email sent successfully." : "Email sending failed.");
+
             return Ok(app);
         }
+
+
         
-        
-        //decline
         [HttpPut("cancel")]
         // [Authorize(Policy = "EmployeePolicy")]
         public void Cancel(int appId)
         {
             _appointmentService.Cancel(appId);
         }
-        
-        
+
+
         [HttpPost("create")]
         // [Authorize(Policy = "CompanyAdminPolicy")]
         public async Task<IActionResult> Create(AppointmentDto dto)
@@ -103,12 +106,9 @@ namespace HospitalAPI.Controllers
                 State = State.Available,
                 Date = dto.Date
             };
-            
+
             _appointmentService.Create(newApp);
             return Ok(newApp);
         }
-        
     }
-
-
 }

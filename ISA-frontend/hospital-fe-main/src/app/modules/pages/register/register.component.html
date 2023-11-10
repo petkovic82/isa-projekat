@@ -1,10 +1,12 @@
 <router-outlet></router-outlet>
 <app-navbar></app-navbar>
 <div class="form-container">
-  <div class="logo-container">
+  <div class="logo-container" *ngIf="systemAdminLoggedIn">
+    Add more users to your app!
+  </div>
+  <div class="logo-container" *ngIf="!systemAdminLoggedIn">
     Register now for a better experience!
   </div>
-
   <div class="line"></div>
   <form class="form">
     <div class="form-group">
@@ -57,7 +59,8 @@
     <div class="form-group">
       <label for="role">Role</label>
       <mat-select [(ngModel)]="role" name="role" id="role">
-        <mat-option *ngFor="let role of (systemAdminLoggedIn ? rolesWhenSystemAdmin : roles)" [value]="role.id">{{ role.name }}</mat-option>
+        <mat-option *ngFor="let role of (systemAdminLoggedIn ? rolesWhenSystemAdmin : roles)"
+                    [value]="role.id">{{ role.name }}</mat-option>
       </mat-select>
     </div>
 

@@ -37,11 +37,6 @@ namespace HospitalLibrary.Core.Repository
             _context.SaveChanges();
         }
 
-        public void Delete(User user)
-        {
-            _context.Users.Remove(user);
-            _context.SaveChanges();
-        }
 
         public User GetUserByConfirmationToken(string token)
         {

@@ -10,6 +10,9 @@ import {BookAppoinment} from "./modules/hospital/appointment/appointment-form/bo
 import {
   CreateAppointmentComponent
 } from "./modules/hospital/appointment/create-appointment/create-appointment.component";
+import {
+  AppointmentsEmployeeComponent
+} from "./modules/hospital/appointment/appointments-patient/appointments-employee.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -19,7 +22,8 @@ const routes: Routes = [
   {path:'companies/employee/:id', component: CompaniesEmployeeComponent},
   {path: 'company-equipment/:id', component: CompanyEquipmentComponent},
   {path: 'equipment-appointment/:id', component: BookAppoinment},
-  {path: 'create-appointment', component: CreateAppointmentComponent}
+  {path: 'create-appointment', component: CreateAppointmentComponent},
+  {path:'all-appointments', component:AppointmentsEmployeeComponent}
   // {path: 'landing', component: ProfileComponent/*, canActivate:[AuthGuardGuard]*/},
 
 ];

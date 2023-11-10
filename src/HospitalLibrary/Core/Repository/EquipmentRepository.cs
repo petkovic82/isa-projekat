@@ -1,5 +1,5 @@
-﻿ using System;
- using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
@@ -15,6 +15,7 @@ namespace HospitalLibrary.Core.Repository
         {
             _context = context;
         }
+
         public List<Equipment> SearchByNameOrCompany(string searchQuery)
         {
             return _context.Equipment
@@ -55,11 +56,6 @@ namespace HospitalLibrary.Core.Repository
             _context.Entry(room).State = EntityState.Modified;
             _context.SaveChanges();
         }
-
-        public void Delete(Equipment room)
-        {
-            _context.Equipment.Remove(room);
-            _context.SaveChanges();
-        }
+        
     }
 }

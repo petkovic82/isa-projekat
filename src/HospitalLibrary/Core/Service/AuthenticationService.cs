@@ -5,16 +5,16 @@ namespace HospitalLibrary.Core.Service
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly IJwtManagerRepository _jWTManager;
+        private readonly IJwtManagerRepository _jWtManager;
 
-        public AuthenticationService(IJwtManagerRepository jWTManager)
+        public AuthenticationService(IJwtManagerRepository jWtManager)
         {
-            _jWTManager = jWTManager;
+            _jWtManager = jWtManager;
         }
 
         public Tokens Authenticate(int userId, string name, Role r)
         {
-            return _jWTManager.Authenticate(userId, name, r);
+            return _jWtManager.Authenticate(userId, name, r);
         }
     }
 }

@@ -66,13 +66,8 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/companies/employee/' + this.id])
   }
 
-//create-appointment
   Appointments() {
-    this.router.navigate(['/appointments/doctor/' + this.id])
-  }
-
-  RegisterSystemAdmin() {
-    this.router.navigate(['/patients'])
+    this.router.navigate(['/all-appointments'])
   }
 
 

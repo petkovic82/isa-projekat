@@ -13,6 +13,8 @@ export class LandingPageComponent implements OnInit {
   firstName: any;
   lastName: any;
   penaltyCount: number = 0;
+  role: number = 0;
+  company:any;
 
   constructor(private authService: AuthService,
               private router: Router, private ts: TokenService,
@@ -23,8 +25,9 @@ export class LandingPageComponent implements OnInit {
     this.Service.getCurrentUser(Number(this.ts.getId())).subscribe((user) => {
       this.firstName = user.firstName ;
       this.lastName = user.lastName ;
-      if(user.role ==0)
-        this.penaltyCount  = user.cancelCount
+      this.penaltyCount  = user.cancelCount
+      this.role = user.userRole
+
     });
   }
 

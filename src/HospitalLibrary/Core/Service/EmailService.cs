@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Threading.Tasks;
@@ -17,6 +16,7 @@ namespace HospitalLibrary.Core.Service
         private readonly MailSettings _mailSettings;
 
         private readonly QrGenerator _generator;
+
         public EmailService(IOptions<MailSettings> mailSettings, QrGenerator generator)
         {
             _mailSettings = mailSettings.Value;
@@ -60,15 +60,14 @@ namespace HospitalLibrary.Core.Service
 
         public async Task<bool> SendQrMail(string userEmail, string userFirstName, AppointmentDto dto)
         {
-           
             try
             {
                 var mailText = "Hello [userFirstName],\n\n" +
-                                        "Thank you for booking appointment. Your appointment ID is [appointmentId]." +
-                                        "Equipment name [equipmentName] with ID [equipmentId] - quantity [quantity]." +
-                                        "Total price is [price]" +
-                                        "Date of appointent : [date]";
-                
+                               "Thank you for booking appointment. Your appointment ID is [appointmentId]." +
+                               "Equipment name [equipmentName] with ID [equipmentId] - quantity [quantity]." +
+                               "Total price is [price]" +
+                               "Date of appointent : [date]";
+
                 mailText = mailText.Replace("[userFirstName]", userFirstName)
                     .Replace("[appointmentId]", dto.Id.ToString())
                     .Replace("[equipmentName]", dto.EquipmentName)
@@ -76,7 +75,7 @@ namespace HospitalLibrary.Core.Service
                     .Replace("[quantity]", dto.Quantity.ToString())
                     .Replace("[price]", dto.Price.ToString())
                     .Replace("[date]", dto.Date.ToString("yyyy-MM-dd HH:mm:ss"));
-                
+
                 var email = new MimeMessage();
                 email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
                 email.To.Add(MailboxAddress.Parse(userEmail));
@@ -122,9 +121,8 @@ namespace HospitalLibrary.Core.Service
 
 
         private static string GetConfirmationLink(string token)
-    {
-        return $"http://localhost:16177/api/Users/confirmRegistration?token={token}";
+        {
+            return $"http://localhost:16177/api/Users/confirmRegistration?token={token}";
+        }
     }
-}
-
 }

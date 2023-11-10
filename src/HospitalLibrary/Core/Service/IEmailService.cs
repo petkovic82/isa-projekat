@@ -7,7 +7,7 @@ namespace HospitalLibrary.Core.Service
     public interface IEmailService
     {
         Task<bool> SendConfirmationEMail(string mail, string name, string token);
-    
-      Task<bool> SendQrMail(string userEmail, string userFirstName, AppointmentDto dto);
+
+        Task<bool> SendQrMail(string userEmail, string userFirstName, AppointmentDto dto);
     }
 }

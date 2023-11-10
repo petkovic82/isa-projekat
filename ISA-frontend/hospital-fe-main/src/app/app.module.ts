@@ -8,6 +8,7 @@ import {HospitalModule} from "./modules/hospital/hospital.module";
 import {PagesModule} from "./modules/pages/pages.module";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
+import { StatePipePipe } from './modules/services/state-pipe.pipe';
 
 
 @NgModule({

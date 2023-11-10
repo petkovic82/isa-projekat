@@ -28,6 +28,7 @@ namespace HospitalLibrary.Core.Service
         {
             return _userRepository.GetById(id);
         }
+
         public void Create(User room)
         {
             _userRepository.Create(room);

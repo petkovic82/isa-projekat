@@ -6,7 +6,7 @@ using HospitalLibrary.Core.Repository;
 namespace HospitalLibrary.Core.Service
 {
     public class EquipmentService : IEquipmentService
-    {        
+    {
         private readonly IEquipmentRepository _equipmentRepository;
         private readonly ICompanyRepository _companyRepository;
 
@@ -25,7 +25,7 @@ namespace HospitalLibrary.Core.Service
         {
             return _equipmentRepository.SearchByNameOrCompany(searchQuery);
         }
-        
+
 
         public IEnumerable<Equipment> GetByCompanyId(int id)
         {
@@ -34,13 +34,17 @@ namespace HospitalLibrary.Core.Service
 
         public List<Equipment> SearchByNameInCompany(string searchQuery, int companyId)
         {
-            return _equipmentRepository.SearchByNameInCompany(searchQuery,companyId);
-
+            return _equipmentRepository.SearchByNameInCompany(searchQuery, companyId);
         }
 
         public object GetById(int id)
         {
             return _equipmentRepository.GetById(id);
+        }
+
+        public void Update(Equipment equipment)
+        {
+            _equipmentRepository.Update(equipment);
         }
     }
 }

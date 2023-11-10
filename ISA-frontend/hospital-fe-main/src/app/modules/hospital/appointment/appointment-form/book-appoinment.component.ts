@@ -96,7 +96,7 @@ export class BookAppoinment implements OnInit {
         console.log(res);
       },
       error: (err: any) => {
-        console.log(err);
+        alert(err);
       }
     });
   }

@@ -1,0 +1,34 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="table-header">
+    <p class="table-title">Your appointments</p>
+
+  </div>
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef class="cell-center">State</th>
+      <td mat-cell *matCellDef="let room" class="clickable cell-center"
+          (click)="cancel(room.id)">{{room.state | statePipe }} </td>
+    </ng-container>
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef class="cell-center">Price</th>
+      <td mat-cell *matCellDef="let room" class=" cell-center">{{room.price}} $</td>
+    </ng-container>
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef class="cell-center">Quantity</th>
+      <td mat-cell *matCellDef="let room" class=" cell-center">{{room.quantity}}</td>
+    </ng-container>
+    <ng-container matColumnDef="number">
+      <th mat-header-cell *matHeaderCellDef class="cell-center">Appointment id</th>
+      <td mat-cell *matCellDef="let room" class=" cell-center">{{room.id}}</td>
+    </ng-container>
+    <ng-container matColumnDef="floor">
+      <th mat-header-cell *matHeaderCellDef class="cell-center">Equipment id</th>
+      <td mat-cell *matCellDef="let room" class="cell-center">{{room.equipmentId}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+<app-footer></app-footer>

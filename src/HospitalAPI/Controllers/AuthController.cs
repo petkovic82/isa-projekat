@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
 {
-   [Route("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
@@ -25,7 +25,7 @@ namespace HospitalAPI.Controllers
         {
             var user = _userService.GetByUsernameAndPassword(authenticationDto.Username, authenticationDto.Password);
             if (user == null) return BadRequest("Username or password is incorrect");
-            var token = _authenticationService.Authenticate(user.Id,user.FirstName, user.UserRole);
+            var token = _authenticationService.Authenticate(user.Id, user.FirstName, user.UserRole);
 
             var role = user.UserRole switch
             {
@@ -46,6 +46,5 @@ namespace HospitalAPI.Controllers
             if (dto.Activated == false) return BadRequest("Activate your profile by clicking link in email!");
             return Ok(dto);
         }
-        
     }
 }

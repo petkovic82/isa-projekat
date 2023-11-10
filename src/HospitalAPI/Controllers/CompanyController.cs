@@ -17,14 +17,14 @@ namespace HospitalAPI.Controllers
             _companyService = roomService;
         }
 
-        
+
         [AllowAnonymous]
         [HttpGet]
         public ActionResult GetAll()
         {
             return Ok(_companyService.GetAll());
         }
-        
+
         [AllowAnonymous]
         [HttpGet("search")]
         public ActionResult<List<Company>> SearchByName(string searchQuery)

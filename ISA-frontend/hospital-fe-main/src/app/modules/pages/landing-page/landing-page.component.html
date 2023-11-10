@@ -2,7 +2,10 @@
 <div>
   Welcome back {{firstName}} {{lastName}} !!
 </div>
-<div>
+<div *ngIf="role == 0">
   Your cancel count {{penaltyCount}} !!
+</div>
+<div *ngIf="role == 1">
+  Add more appointments for your Company by clicking on Create new in navigation bar !!
 </div>
 <app-footer></app-footer>

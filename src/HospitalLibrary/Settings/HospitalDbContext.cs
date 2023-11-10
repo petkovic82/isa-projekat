@@ -6,13 +6,14 @@ namespace HospitalLibrary.Settings
 {
     public class HospitalDbContext : DbContext
     {
-        public DbSet<Room> Rooms { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Company> Company { get; set; }
         public DbSet<Equipment> Equipment { get; set; }
 
-        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
+        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,7 +23,7 @@ namespace HospitalLibrary.Settings
                     Id = 1,
                     Email = "kpetkovic279@gmail.com",
                     Username = "kpetkovic279",
-                    UserRole = Role.Employee, 
+                    UserRole = Role.Employee,
                     Password = "kpetkovic279",
                     FirstName = "Kristina",
                     LastName = "Petkovic",
@@ -39,7 +40,7 @@ namespace HospitalLibrary.Settings
                     Id = 5,
                     Email = "kpetkovic7@gmail.com",
                     Username = "kpetkovic7",
-                    UserRole = Role.Employee, 
+                    UserRole = Role.Employee,
                     Password = "kpetkovic7",
                     FirstName = "Bjanka",
                     LastName = "Tijodorovic",
@@ -64,7 +65,7 @@ namespace HospitalLibrary.Settings
                     Country = "USA",
                     PhoneNumber = "987-654-3210",
                     Job = "System Admin",
-                    CompanyId= 0, //sistem admin nema kompaniju
+                    CompanyId = 0, //sistem admin nema kompaniju
                     Activated = true,
                     CancelCount = 0
                 },
@@ -90,7 +91,7 @@ namespace HospitalLibrary.Settings
                     Id = 4,
                     Email = "kpetkovic18@gmail.com",
                     Username = "kpetkovic18",
-                    UserRole = Role.CompanyAdmin, 
+                    UserRole = Role.CompanyAdmin,
                     Password = "kpetkovic18",
                     FirstName = "Milica",
                     LastName = "Petkovic",
@@ -119,13 +120,12 @@ namespace HospitalLibrary.Settings
                     Id = 3,
                     Name = "Johnson & Johnson"
                 }
-                
             );
-            
+
             modelBuilder.Entity<Equipment>().HasData(
                 new Equipment
                 {
-                    Id = 1, 
+                    Id = 1,
                     Name = "Shower Chair",
                     CompanyId = 1,
                     Quantity = 150,
@@ -188,14 +188,14 @@ namespace HospitalLibrary.Settings
                     Price = 4
                 }
             );
-            
+
             modelBuilder.Entity<Appointment>().HasData(
                 new Appointment
                 {
                     Id = 1,
-                    EmployeeId = 1, 
+                    EmployeeId = 1,
                     EquipmentId = 1,
-                    State = State.Booked, 
+                    State = State.Booked,
                     Date = DateTime.Now,
                     Quantity = 5
                 },
@@ -203,13 +203,13 @@ namespace HospitalLibrary.Settings
                 {
                     Id = 2,
                     EmployeeId = 2,
-                    EquipmentId = 2, 
-                    State = State.Booked, 
+                    EquipmentId = 2,
+                    State = State.Booked,
                     Date = DateTime.Now,
                     Quantity = 5
                 }
             );
-            
+
             base.OnModelCreating(modelBuilder);
         }
     }
