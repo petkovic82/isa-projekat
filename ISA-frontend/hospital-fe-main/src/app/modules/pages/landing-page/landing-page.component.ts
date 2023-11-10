@@ -12,6 +12,7 @@ import {ServiceService} from "../../services/service.service";
 export class LandingPageComponent implements OnInit {
   firstName: any;
   lastName: any;
+  penaltyCount: number = 0;
 
   constructor(private authService: AuthService,
               private router: Router, private ts: TokenService,
@@ -22,6 +23,8 @@ export class LandingPageComponent implements OnInit {
     this.Service.getCurrentUser(Number(this.ts.getId())).subscribe((user) => {
       this.firstName = user.firstName ;
       this.lastName = user.lastName ;
+      if(user.role ==0)
+        this.penaltyCount  = user.cancelCount
     });
   }
 

@@ -72,4 +72,21 @@ export class ServiceService {
   getEquipmentById(companyId: any):any {
     return this.http.get(`${this.baseUrl}/equipment/${companyId}`);
   }
+
+  getAppointmentByEquipmentId(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/appointment/${id}`);
+  }
+  getAppointmentsByEmployeeId(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/appointment/employee${id}`);
+  }
+  bookAppointment(dto: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/appointment/book`, dto);
+  }
+  cancelAppointment(appId: number): Observable<any> {
+    return this.http.put(`${this.baseUrl}/appointment/cancel?appId=${appId}`, {});
+  }
+  createAppointment(dto: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/appointment/create`, dto);
+  }
+
 }

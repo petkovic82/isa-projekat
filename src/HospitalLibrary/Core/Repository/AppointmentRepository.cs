@@ -45,7 +45,7 @@ namespace HospitalLibrary.Core.Repository
 
         public object GetCreatedByEquipmentId(int id)
         {
-            return _context.Appointments.Where(a => a.EquipmentId == id && a.State == State.Created);
+            return _context.Appointments.Where(a => a.EquipmentId == id && a.State == State.Available);
         }
         public object GetByEmployeeId(int id)
         {

@@ -9,12 +9,23 @@
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }">Companies</a>
         </li>
-        <li class="shrink" *ngIf="isLoggedCompanyAdmin()">
-          <a
-            (click)="Appointments()"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }">My appointments</a>
-        </li>
+        <div *ngIf="isLoggedCompanyAdmin()">
+          <li class="shrink" >
+            <a
+              (click)="Appointments()"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }">My appointments</a>
+          </li>
+          <li class="shrink">
+            <a
+              (click)="CreateAppointment()"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }">Create new</a>
+          </li>
+
+        </div>
+
+
         <li class="shrink" *ngIf="isLoggedSystemAdmin()">
           <a
             (click)="RegisterSystemAdmin()"

@@ -2,7 +2,7 @@
 {
     public enum State
     {
-        Done, InProgress, Canceled,
-        Created
+        Done, Booked, Canceled,
+        Available
     }
 }

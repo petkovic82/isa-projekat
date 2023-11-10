@@ -50,7 +50,7 @@ namespace HospitalLibrary.Core.Service
         {
             var app =_appointmentRepository.GetById(appId);
             
-            app.State = State.Created;
+            app.State = State.Available;
             app.EmployeeId = 0;
             app.Quantity = 0;
             IncreaseCancelCount(app);

@@ -66,6 +66,7 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/companies/employee/' + this.id])
   }
 
+//create-appointment
   Appointments() {
     this.router.navigate(['/appointments/doctor/' + this.id])
   }
@@ -88,12 +89,15 @@ export class NavbarComponent implements OnInit {
   }
 
   Home() {
-    if(this.isLoggedUser()) {
+    if (this.isLoggedUser()) {
       this.router.navigate(['/landing'])
-    }
-    else{
+    } else {
       this.router.navigate(['/'])
     }
+  }
+
+  CreateAppointment() {
+    this.router.navigate(['/create-appointment'])
   }
 }
 

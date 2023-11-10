@@ -195,7 +195,7 @@ namespace HospitalLibrary.Settings
                     Id = 1,
                     EmployeeId = 1, 
                     EquipmentId = 1,
-                    State = State.InProgress, 
+                    State = State.Booked, 
                     Date = DateTime.Now,
                     Quantity = 5
                 },
@@ -204,7 +204,7 @@ namespace HospitalLibrary.Settings
                     Id = 2,
                     EmployeeId = 2,
                     EquipmentId = 2, 
-                    State = State.InProgress, 
+                    State = State.Booked, 
                     Date = DateTime.Now,
                     Quantity = 5
                 }

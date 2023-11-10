@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
   }
 
   SearchEquipment() {
-    console.log(this.searchEquipment)
+
     this.Service.searchEquipmentByNameOrCompany(this.searchEquipment).subscribe((equipment) => {
       this.dataSource = equipment;
     });

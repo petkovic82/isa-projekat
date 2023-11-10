@@ -57,20 +57,26 @@ namespace HospitalAPI.Controllers
                     "Cant book in same company at the same time");
             
             var app =_appointmentService.GetById(dto.Id);
+            var equipment = (Equipment)_equipmentService.GetById(dto.EquipmentId);
+            var user = _userService.GetById(dto.EmployeeId);
+            
             app.EmployeeId = dto.EmployeeId;
-            app.State = State.InProgress;
+            app.State = State.Booked;
+            app.Quantity = dto.Quantity;
+            
+            app.Price = equipment.Price * app.Quantity;
+
+            if (equipment != null) dto.EquipmentName = equipment.Name;
             
             _appointmentService.Update(app);
             
-            var user = _userService.GetById(dto.EmployeeId);
-            var equipment = (Equipment)_equipmentService.GetById(dto.EquipmentId);
-            if (equipment != null) dto.EquipmentName = equipment.Name;
             dto.EmployeeFullName = user.FirstName + ' '+ user.LastName;
+            dto.Price = app.Price;
+            dto.State = app.State;
             var isEmailSent =
              await _emailService.SendQrMail(user.Email, user.FirstName, dto);
              Console.WriteLine(isEmailSent ? "Email sent successfully." : "Email sending failed.");
-
-
+             
             return Ok(app);
         }
         
@@ -93,9 +99,9 @@ namespace HospitalAPI.Controllers
                 EmployeeId = 0,
                 EquipmentId = dto.EquipmentId,
                 Quantity = 0,
-                Price = dto.Price,
-                State = State.Created,
-                Date = DateTime.Now
+                Price = 0,
+                State = State.Available,
+                Date = dto.Date
             };
             
             _appointmentService.Create(newApp);
