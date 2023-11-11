@@ -23,8 +23,8 @@ namespace HospitalAPI.Controllers
         [HttpPost("login")]
         public IActionResult Authenticate(AuthenticationDto authenticationDto)
         {
-            var user = _userService.GetByUsernameAndPassword(authenticationDto.Username, authenticationDto.Password);
-            if (user == null) return NotFound("Username or password is incorrect");
+            var user = _userService.GetByUsername(authenticationDto.Username);
+            if (user == null || !BCrypt.Net.BCrypt.Verify(authenticationDto.Password, user.Password)) return NotFound("Username or password is incorrect");
             var token = _authenticationService.Authenticate(user.Id, user.FirstName, user.UserRole);
 
             var role = user.UserRole switch

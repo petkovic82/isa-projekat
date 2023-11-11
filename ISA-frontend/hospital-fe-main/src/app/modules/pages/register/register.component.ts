@@ -6,6 +6,7 @@ import {TokenService} from "../../hospital/navbar/services/token.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../../hospital/dialog/dialog.component";
 import {ServiceService} from "../../services/service.service";
+import {catchError} from "rxjs/operators";
 
 @Component({
   selector: 'app-register',
@@ -75,17 +76,19 @@ export class RegisterComponent implements OnInit {
       this.authService.adminRegistration(this.newUser).subscribe({
         next: res => {
           console.log(res);
-          alert("Successfully registered patient with id: " + res.id + "! Check your email to confirm registration!");
+          alert("Successfully registered user with id: " + res.id + "! Check your email to confirm registration!");
         },
         error: err => {
-          console.log(err);
+          if (err.status === 400) { //POPRAVI
+            alert('This company already has registered admin');
+          }
         }
       });
     } else {
       this.authService.register(this.newUser).subscribe({
         next: res => {
           console.log(res);
-          alert("Successfully registered patient with id: " + res.id + "! Check your email to confirm registration!");
+          alert("Successfully registered user with id: " + res.id + "! Check your email to confirm registration!");
         },
         error: err => {
           console.log(err);

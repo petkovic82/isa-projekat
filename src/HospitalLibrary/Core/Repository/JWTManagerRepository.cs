@@ -28,6 +28,8 @@ namespace HospitalLibrary.Core.Repository
                     new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
                     new(ClaimTypes.Name, name),
                     new Claim(ClaimTypes.Role, r.ToString())
+                    //     new Claim("Id", user.Id.ToString()),
+                  //  new Claim("Email", user.Email)
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey),

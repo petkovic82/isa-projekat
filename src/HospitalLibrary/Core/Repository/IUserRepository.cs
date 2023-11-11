@@ -12,5 +12,6 @@ namespace HospitalLibrary.Core.Repository
         void Update(User user);
         public User FindCompanyAdmin(int companyId);
         User GetUserByConfirmationToken(string token);
+        User GetByUsername(object username);
     }
 }

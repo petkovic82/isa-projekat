@@ -30,7 +30,7 @@ namespace HospitalAPI.Controllers
             {
                 Username = dto.Username,
                 UserRole = Role.Employee,
-                Password = dto.Password,
+                Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 Email = dto.Email,
@@ -67,7 +67,7 @@ namespace HospitalAPI.Controllers
             {
                 Username = dto.Username,
                 UserRole = dto.UserRole,
-                Password = dto.Password,
+                Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 Email = dto.Email,

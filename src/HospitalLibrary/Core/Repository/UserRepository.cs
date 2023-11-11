@@ -42,7 +42,13 @@ namespace HospitalLibrary.Core.Repository
         {
             return _context.Users.FirstOrDefault(u => u.ConfirmationToken == token);
         }
-        
+
+        public User GetByUsername(object username)
+        {
+            return GetAll().FirstOrDefault(u =>  u.Username.Equals(username));
+
+        }
+
         public User FindCompanyAdmin(int companyId)
         {
             return _context.Users.FirstOrDefault(u => u.CompanyId == companyId && u.UserRole == Role.CompanyAdmin);

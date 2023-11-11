@@ -48,5 +48,10 @@ namespace HospitalLibrary.Core.Service
         {
             _userRepository.Update(user);
         }
+
+        public User GetByUsername(string authenticationDtoUsername)
+        {
+            return _userRepository.GetByUsername(authenticationDtoUsername);
+        }
     }
 }
