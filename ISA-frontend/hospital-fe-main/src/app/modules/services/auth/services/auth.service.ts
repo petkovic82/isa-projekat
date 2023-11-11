@@ -31,14 +31,21 @@ export class AuthService {
   signIn(signInRequest: any): Subscription {
     return this.http.post<any>("http://localhost:16177/api/Authentication/login", signInRequest)
       .pipe(
-        catchError(this.handleError),
+        catchError(error => {
+          if (error.status === 400) {
+            alert('You have to finish registration before you can log in to your account! Check your email');
+          }
+          if (error.status === 404) {
+            alert('Invalid credentials');
+          }
+          return this.handleError(error);
+        })
       )
       .subscribe((response: any) => {
         if (response) {
           console.log(response)
 
           this.saveUserAndToken(response);
-  //        this.extractUsers(response);
           this.router.navigate(['/landing'])
         }
       });
@@ -58,9 +65,9 @@ export class AuthService {
     const token = response.token;
     const id = response.id;
     const role = response.role;
-    //const user = this.extractUsers(response);
+
     const decodedToken: Token = jwtDecode(token);
-   console.log(decodedToken.nameid)
+
     window.sessionStorage.setItem("token", token);
     window.sessionStorage.setItem("id",String(id));
     window.sessionStorage.setItem("role", String(role));
@@ -168,10 +175,9 @@ export class AuthService {
     } else {
       errorMessage = `Backend returned code ${err.status}: ${err.body.error}`;
     }
-    if (err['status'] == 404) {
-      alert('You have to finnish registration ')
+    if (err.error.status == 400) {
+      alert('You have to finish registration');
     }
-    console.error(err);
     return throwError(() => errorMessage);
   }
 }
