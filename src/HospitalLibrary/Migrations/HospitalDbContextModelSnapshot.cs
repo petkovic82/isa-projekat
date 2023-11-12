@@ -41,34 +41,15 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("RowVersion")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("State")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.ToTable("Appointments");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Date = new DateTime(2023, 11, 11, 0, 21, 40, 804, DateTimeKind.Local).AddTicks(6305),
-                            EmployeeId = 1,
-                            EquipmentId = 1,
-                            Price = 0.0,
-                            Quantity = 5,
-                            State = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Date = new DateTime(2023, 11, 11, 0, 21, 40, 809, DateTimeKind.Local).AddTicks(6663),
-                            EmployeeId = 2,
-                            EquipmentId = 2,
-                            Price = 0.0,
-                            Quantity = 5,
-                            State = 1
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Company", b =>
@@ -260,14 +241,14 @@ namespace HospitalLibrary.Migrations
                             City = "New York",
                             CompanyId = 1,
                             Country = "USA",
-                            Email = "kpetkovic279@gmail.com",
+                            Email = "kpetkovic18@gmail.com",
                             FirstName = "Kristina",
                             Job = "Software Engineer",
                             LastName = "Petkovic",
-                            Password = "kpetkovic279",
+                            Password = "$2b$10$O1TJyw4yucpzbIIy7zPQH.BFM7irpAOpAK1flvUP8jTaZA15j4QRS",
                             PhoneNumber = "123-456-7890",
                             UserRole = 0,
-                            Username = "kpetkovic279"
+                            Username = "employee1"
                         },
                         new
                         {
@@ -277,14 +258,14 @@ namespace HospitalLibrary.Migrations
                             City = "New York",
                             CompanyId = 2,
                             Country = "USA",
-                            Email = "kpetkovic7@gmail.com",
+                            Email = "kpetkovic18@gmail.com",
                             FirstName = "Bjanka",
                             Job = "Software Test Engineer",
                             LastName = "Tijodorovic",
-                            Password = "kpetkovic7",
+                            Password = "$2b$10$rrIm9QmwXFNy8WCqyZ3r8OdFPQfMYFqtKwaj8KJ88f0BTF8D9h/0e",
                             PhoneNumber = "123-456-7890",
                             UserRole = 0,
-                            Username = "kpetkovic7"
+                            Username = "employee2"
                         },
                         new
                         {
@@ -294,14 +275,14 @@ namespace HospitalLibrary.Migrations
                             City = "Los Angeles",
                             CompanyId = 0,
                             Country = "USA",
-                            Email = "kpetkovic27@gmail.com",
+                            Email = "kpetkovic18@gmail.com",
                             FirstName = "Jelena",
                             Job = "System Admin",
                             LastName = "Petkovic",
-                            Password = "kpetkovic27",
+                            Password = "$2b$10$OaXgI5rRAbmqhO6/adQ7YO4RCWPG8GGHW5bTBXUL5g7kgeE/XRb42",
                             PhoneNumber = "987-654-3210",
                             UserRole = 2,
-                            Username = "user2"
+                            Username = "systemAdmin"
                         },
                         new
                         {
@@ -315,10 +296,10 @@ namespace HospitalLibrary.Migrations
                             FirstName = "Jelisaveta",
                             Job = "Company admin",
                             LastName = "Petrovic",
-                            Password = "kpetkovic18",
+                            Password = "$2b$10$cjKSp9bN2DnFd44L.bx1HeQZaoeeKSzZLKufdt6OxjkKmD4kExXE6",
                             PhoneNumber = "987-654-3210",
                             UserRole = 1,
-                            Username = "company admin2"
+                            Username = "companyAdmin1"
                         },
                         new
                         {
@@ -332,10 +313,10 @@ namespace HospitalLibrary.Migrations
                             FirstName = "Milica",
                             Job = "Company admin",
                             LastName = "Petkovic",
-                            Password = "kpetkovic18",
+                            Password = "$2b$10$YrWRMeuG1DQi7AFqW55AIOY5sC7gr9t8zMaJzDlCS9z5cme5DorlW",
                             PhoneNumber = "987-654-3210",
                             UserRole = 1,
-                            Username = "kpetkovic18"
+                            Username = "companyAdmin2"
                         });
                 });
 

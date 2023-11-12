@@ -57,7 +57,8 @@ namespace HospitalAPI.Controllers
                 return BadRequest(
                     "Cant book in same company at the same time");
 
-            var app = _appointmentService.GetById(dto.Id);
+            var app = _appointmentService.GetById(dto.Id); //uvek ce biti dobar row version, posalji ceo dto u update ako stignes i 
+            //tek onda proveri je l valja rowVersion
             var equipment = (Equipment)_equipmentService.GetById(dto.EquipmentId);
             var user = _userService.GetById(dto.EmployeeId);
 
@@ -107,7 +108,8 @@ namespace HospitalAPI.Controllers
                 Quantity = 0,
                 Price = 0,
                 State = State.Available,
-                Date = dto.Date
+                Date = dto.Date,
+                RowVersion = Guid.NewGuid()
             };
 
             _appointmentService.Create(newApp);

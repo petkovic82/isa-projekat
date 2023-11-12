@@ -90,10 +90,11 @@ export class BookAppoinment implements OnInit {
       alert("Not enough in stock!")
     this.chosenAppointment.employeeId = this.employeeId
     this.chosenAppointment.quantity = this.quantity;
-
+    
     this.Service.bookAppointment(this.chosenAppointment).subscribe({
       next: (res: any) => {
         alert("You have successfully booked appointment with Id :" + res.id + '. Check ypur email for more info!')
+        this.router.navigate(['/all-appointments'])
       },
       error: (err: any) => {
         alert('Cant book in same company at the same time');

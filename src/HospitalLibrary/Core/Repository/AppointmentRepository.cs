@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -16,7 +18,6 @@ namespace HospitalLibrary.Core.Repository
             _context = context;
         }
         
-
         public Appointment GetById(int id)
         {
             return _context.Appointments.Find(id);
@@ -33,7 +34,23 @@ namespace HospitalLibrary.Core.Repository
             _context.Entry(room).State = EntityState.Modified;
             _context.SaveChanges();
         }
-        
+
+        public void Book(Appointment bookedAppointment)
+        {
+            var existingAppointment = _context.Appointments.Find(bookedAppointment.Id);
+
+            if (existingAppointment == null) return;
+            if (existingAppointment.RowVersion == bookedAppointment.RowVersion)
+            {
+                existingAppointment.RowVersion = Guid.NewGuid();
+                _context.Entry(existingAppointment).CurrentValues.SetValues(bookedAppointment);
+                _context.SaveChanges();
+            }
+            else
+            {
+                throw new DbUpdateConcurrencyException("Concurrency conflict detected");
+            }
+        }
 
         public object GetCreatedByEquipmentId(int id)
         {

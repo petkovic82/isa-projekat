@@ -10,6 +10,8 @@ namespace HospitalLibrary.Core.Service
         public object GetByEmployeeId(int id);
         public Appointment GetById(int id);
         void Update(Appointment app);
+        
+        void Book(Appointment app);
         void Cancel(int appId);
         bool CanEmployeeBook(AppointmentDto dto);
     }

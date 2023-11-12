@@ -45,7 +45,10 @@ namespace HospitalLibrary.Core.Service
         {
             _appointmentRepository.Update(app);
         }
-
+        public void Book(Appointment app)
+        {
+            _appointmentRepository.Book(app);
+        }
         public void Cancel(int appId)
         {
             var app =_appointmentRepository.GetById(appId);

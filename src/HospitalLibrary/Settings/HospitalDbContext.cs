@@ -17,14 +17,15 @@ namespace HospitalLibrary.Settings
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             modelBuilder.Entity<User>().HasData(
                 new User
                 {
                     Id = 1,
-                    Email = "kpetkovic279@gmail.com",
-                    Username = "kpetkovic279",
+                    Email = "kpetkovic18@gmail.com",
+                    Username = "employee1",
                     UserRole = Role.Employee,
-                    Password = "kpetkovic279",
+                    Password =  BCrypt.Net.BCrypt.HashPassword("1"),
                     FirstName = "Kristina",
                     LastName = "Petkovic",
                     City = "New York",
@@ -38,10 +39,10 @@ namespace HospitalLibrary.Settings
                 new User
                 {
                     Id = 5,
-                    Email = "kpetkovic7@gmail.com",
-                    Username = "kpetkovic7",
+                    Email = "kpetkovic18@gmail.com",
+                    Username = "employee2",
                     UserRole = Role.Employee,
-                    Password = "kpetkovic7",
+                    Password =  BCrypt.Net.BCrypt.HashPassword("1"),
                     FirstName = "Bjanka",
                     LastName = "Tijodorovic",
                     City = "New York",
@@ -55,10 +56,10 @@ namespace HospitalLibrary.Settings
                 new User
                 {
                     Id = 2,
-                    Email = "kpetkovic27@gmail.com",
-                    Username = "user2",
+                    Email = "kpetkovic18@gmail.com",
+                    Username = "systemAdmin",
                     UserRole = Role.SystemAdmin,
-                    Password = "kpetkovic27",
+                    Password =  BCrypt.Net.BCrypt.HashPassword("1"),
                     FirstName = "Jelena",
                     LastName = "Petkovic",
                     City = "Los Angeles",
@@ -73,9 +74,9 @@ namespace HospitalLibrary.Settings
                 {
                     Id = 3,
                     Email = "admin2@gmail.com",
-                    Username = "company admin2",
+                    Username = "companyAdmin1",
                     UserRole = Role.CompanyAdmin,
-                    Password = "kpetkovic18",
+                    Password = BCrypt.Net.BCrypt.HashPassword("1"),
                     FirstName = "Jelisaveta",
                     LastName = "Petrovic",
                     City = "Los Angeles",
@@ -90,9 +91,9 @@ namespace HospitalLibrary.Settings
                 {
                     Id = 4,
                     Email = "kpetkovic18@gmail.com",
-                    Username = "kpetkovic18",
+                    Username = "companyAdmin2",
                     UserRole = Role.CompanyAdmin,
-                    Password = "kpetkovic18",
+                    Password =  BCrypt.Net.BCrypt.HashPassword("1"),
                     FirstName = "Milica",
                     LastName = "Petkovic",
                     City = "Los Angeles",
@@ -188,27 +189,7 @@ namespace HospitalLibrary.Settings
                     Price = 4
                 }
             );
-
-            modelBuilder.Entity<Appointment>().HasData(
-                new Appointment
-                {
-                    Id = 1,
-                    EmployeeId = 1,
-                    EquipmentId = 1,
-                    State = State.Booked,
-                    Date = DateTime.Now,
-                    Quantity = 5
-                },
-                new Appointment
-                {
-                    Id = 2,
-                    EmployeeId = 2,
-                    EquipmentId = 2,
-                    State = State.Booked,
-                    Date = DateTime.Now,
-                    Quantity = 5
-                }
-            );
+            
 
             base.OnModelCreating(modelBuilder);
         }

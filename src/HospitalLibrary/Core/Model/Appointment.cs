@@ -13,5 +13,6 @@ namespace HospitalLibrary.Core.Model
         public double Price { get; set; }
         public State State { get; set; }
         public DateTime Date { get; set; }
+        public Guid RowVersion { get; set; }
     }
 }
