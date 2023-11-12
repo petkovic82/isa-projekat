@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {TokenService} from "../../hospital/navbar/services/token.service";
+import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth/services/auth.service";
 // @ts-ignore
 import {UserDto} from "../../dto/userDto";
@@ -17,8 +16,7 @@ export class LogInComponent implements OnInit {
   username: string = ''
   password: string = ''
   loginForm!: FormGroup;
-  isExist: boolean = false;
-  private user: LoginRequest = new LoginRequest('','') ;
+  private user: LoginRequest = new LoginRequest('', '');
 
   constructor(private authService: AuthService,
               private router: Router) {

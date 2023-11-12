@@ -35,6 +35,7 @@ export class TokenService {
       return window.sessionStorage.getItem("role");
     }
   }
+
   getId(): string | null {
     if (window.sessionStorage.getItem("id") == "") {
       return "";
@@ -42,16 +43,7 @@ export class TokenService {
       return window.sessionStorage.getItem("id");
     }
   }
-  getRoleFromToken(): number {
-    let token = window.localStorage.getItem("token")
-    if (token) {
-      let tokenSplit = token.split('.')
-      let decoded = decodeURIComponent(encodeURIComponent(window.atob(tokenSplit[1])));
-      let obj = JSON.parse(decoded);
-      return obj['Role'];
-    }
-    return 6;
-  }
+
 
   getEmailFromToken(): string {
     let token = window.localStorage.getItem("token")

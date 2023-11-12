@@ -83,8 +83,11 @@ namespace HospitalAPI
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("SystemAdminPolicy", policy => { policy.RequireRole("SystemAdmin"); });
+                options.AddPolicy("EmployeePolicy", policy => policy.RequireRole(Role.Employee.ToString()));
+                options.AddPolicy("CompanyAdminPolicy", policy => policy.RequireRole(Role.CompanyAdmin.ToString()));
+                options.AddPolicy("SystemAdminPolicy", policy => policy.RequireRole(Role.SystemAdmin.ToString()));
             });
+
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
         }
 

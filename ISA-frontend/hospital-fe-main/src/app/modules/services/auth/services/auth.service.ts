@@ -106,16 +106,8 @@ export class AuthService {
     return this.token;
   }
 
-  isCompanyAdmin() {
-    return this.ts.getRole() === "1";
-  }
-
-  isEmployee() {
-    return this.ts.getRole() === "0";
-  }
-
   isSystemAdmin() {
-    return this.ts.getRole() === "2";
+    return this.ts.getRole() === '2';
   }
 
   clearAuthAndRedirectHome() {

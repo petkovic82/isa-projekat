@@ -7,7 +7,7 @@ import {CreateAppointmentDto} from "../../../dto/createAppointmentDto";
 
 
 @Component({
-  selector: 'app-appointment-form',
+  selector: 'app-book-appointment',
   templateUrl: './book-appoinment.component.html',
   styleUrls: ['./book-appoinment.component.css']
 })
@@ -86,17 +86,17 @@ export class BookAppoinment implements OnInit {
 
   book() {
 
-    if( this.quantityMax < this.quantity)
+    if (this.quantityMax < this.quantity)
       alert("Not enough in stock!")
     this.chosenAppointment.employeeId = this.employeeId
     this.chosenAppointment.quantity = this.quantity;
 
     this.Service.bookAppointment(this.chosenAppointment).subscribe({
       next: (res: any) => {
-        console.log(res);
+        alert("You have successfully booked appointment with Id :" + res.id + '. Check ypur email for more info!')
       },
       error: (err: any) => {
-        alert(err);
+        alert('Cant book in same company at the same time');
       }
     });
   }

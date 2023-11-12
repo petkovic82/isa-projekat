@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -37,8 +38,10 @@ namespace HospitalAPI.Controllers
         }
 
 
-        // [Authorize]
+        
+         
         [HttpGet("employee{id}")]
+     //   [Authorize(Policy = "EmployeePolicy")]
         public ActionResult GetByEmployeeId(int id)
         {
             var user = _appointmentService.GetByEmployeeId(id);

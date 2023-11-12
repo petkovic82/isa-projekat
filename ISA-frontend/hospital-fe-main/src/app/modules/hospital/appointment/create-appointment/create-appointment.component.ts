@@ -51,7 +51,7 @@ export class CreateAppointmentComponent implements OnInit {
     this.dto.date = String(this.date);
 
     this.Service.createAppointment(this.dto).subscribe((app) => {
-      console.log(app)
+      alert("You have successfully created appointment with Id :"+app.id)
     });
   }
 }

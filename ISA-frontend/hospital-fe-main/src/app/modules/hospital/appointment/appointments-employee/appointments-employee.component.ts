@@ -8,14 +8,14 @@ import {TokenService} from "../../navbar/services/token.service";
 import {ServiceService} from "../../../services/service.service";
 
 @Component({
-  selector: 'app-appointments-patient',
+  selector: 'app-appointments-employee',
   templateUrl: './appointments-employee.component.html',
   styleUrls: ['./appointments-employee.component.css']
 })
 export class AppointmentsEmployeeComponent implements OnInit {
 
   public dataSource = new MatTableDataSource<DTOAppointment>();
-  public displayedColumns = ['number', 'floor','quantity', 'price','state' ];
+  public displayedColumns = ['number', 'floor','quantity', 'price','state', 'date'];
   public appointments: DTOAppointment[] = [];
   private id: any;
 
