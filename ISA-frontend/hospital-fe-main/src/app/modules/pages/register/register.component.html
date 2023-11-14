@@ -21,7 +21,7 @@
              type="text">
     </div>
 
-    <div class="form-group">
+    <div class="form-group" *ngIf ="this.systemAdminLoggedIn">
       <label for="companyId">Company</label>
       <mat-select [(ngModel)]="companyId" name="companyId" id="companyId">
         <mat-option *ngFor="let c of company" [value]="c.id">{{ c.name }}</mat-option>

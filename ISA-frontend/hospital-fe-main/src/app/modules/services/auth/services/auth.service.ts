@@ -9,7 +9,7 @@ import {DTORegistrationMedicalData} from "../models/DTORegistrationMedicalData";
 import {catchError} from "rxjs/operators";
 import jwtDecode from "jwt-decode";
 import {Users} from "../models/users";
-import {TokenService} from "../../../hospital/navbar/services/token.service";
+import {TokenService} from "./token.service";
 
 @Injectable({
   providedIn: "root",
@@ -65,8 +65,11 @@ export class AuthService {
     const token = response.token;
     const id = response.id;
     const role = response.role;
-
     const decodedToken: Token = jwtDecode(token);
+    const role2 = this.getRoleToString();
+
+    //if(role === 'SystemAdmin')
+
 
     window.sessionStorage.setItem("token", token);
     window.sessionStorage.setItem("id",String(id));
@@ -104,6 +107,10 @@ export class AuthService {
 
   getToken() {
     return this.token;
+  }
+
+  getRoleToString(){
+    return this.ts.getRoleFromToken()
   }
 
   isSystemAdmin() {

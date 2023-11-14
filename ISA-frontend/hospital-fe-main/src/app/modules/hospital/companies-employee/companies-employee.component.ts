@@ -3,7 +3,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {DTOAppointment} from "../../model/room.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ServiceService} from "../../services/service.service";
-import {TokenService} from "../navbar/services/token.service";
+import {TokenService} from "../../services/auth/services/token.service";
 
 @Component({
   selector: 'app-companies-employee',

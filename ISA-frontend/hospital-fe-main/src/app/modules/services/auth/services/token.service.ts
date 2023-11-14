@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Token} from "../../../services/auth/models/token";
+import {Token} from "../models/token";
 import jwtDecode from "jwt-decode";
 
 @Injectable({
@@ -12,10 +12,10 @@ export class TokenService {
 
 
   getToken(): string | null {
-    if (localStorage.getItem("token") == "") {
+    if (window.sessionStorage.getItem("token") == "") {
       return "";
     } else {
-      return localStorage.getItem("token");
+      return window.sessionStorage.getItem("token");
     }
   }
 
@@ -52,6 +52,16 @@ export class TokenService {
       let decoded = decodeURIComponent(encodeURIComponent(window.atob(tokenSplit[1])));
       let obj = JSON.parse(decoded);
       return obj['Email'];
+    }
+    return '';
+  }
+
+  getRoleFromToken(): string {
+    let token = window.sessionStorage.getItem("token")
+    if (token) {
+      const decodedToken: Token = jwtDecode(token);
+      console.log(decodedToken)
+      return decodedToken.role;
     }
     return '';
   }

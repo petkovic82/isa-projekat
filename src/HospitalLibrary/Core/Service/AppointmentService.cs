@@ -11,7 +11,7 @@ namespace HospitalLibrary.Core.Service
     public class AppointmentService : IAppointmentService
     {
         private readonly IAppointmentRepository _appointmentRepository;
-        
+
         private readonly IUserRepository _userRepository;
         private readonly IEquipmentRepository _equipmentRepository;
 
@@ -32,10 +32,12 @@ namespace HospitalLibrary.Core.Service
         {
             return _appointmentRepository.GetCreatedByEquipmentId(id);
         }
+
         public object GetByEmployeeId(int id)
         {
             return _appointmentRepository.GetByEmployeeId(id);
         }
+
         public Appointment GetById(int id)
         {
             return _appointmentRepository.GetById(id);
@@ -45,17 +47,24 @@ namespace HospitalLibrary.Core.Service
         {
             _appointmentRepository.Update(app);
         }
+
         public void Book(Appointment app)
         {
             _appointmentRepository.Book(app);
         }
+
         public void Cancel(int appId)
         {
-            var app =_appointmentRepository.GetById(appId);
-            
+            var app = _appointmentRepository.GetById(appId);
+
             app.State = State.Available;
             IncreaseCancelCount(app);
             app.EmployeeId = 0;
+
+            var equipment = _equipmentRepository.GetById(app.EquipmentId);
+            equipment.Quantity += app.Quantity;
+            _equipmentRepository.Update(equipment);
+
             app.Quantity = 0;
             app.Price = 0;
             Update(app);
@@ -74,19 +83,20 @@ namespace HospitalLibrary.Core.Service
                     return false;
                 }
             }
+
             return true;
         }
 
         private void IncreaseCancelCount(Appointment app)
         {
-            var user =_userRepository.GetById(app.EmployeeId);
+            var user = _userRepository.GetById(app.EmployeeId);
             if (DateTime.Today.AddHours(24) == app.Date)
             {
-                user.CancelCount =+ 2;
+                user.CancelCount += 2;
             }
             else
             {
-                user.CancelCount =+ 1;
+                user.CancelCount += 1;
             }
 
             _userRepository.Update(user);

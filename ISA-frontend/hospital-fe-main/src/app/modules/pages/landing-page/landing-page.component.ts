@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../services/auth/services/auth.service";
 import {Router} from "@angular/router";
-import {TokenService} from "../../hospital/navbar/services/token.service";
+import {TokenService} from "../../services/auth/services/token.service";
 import {ServiceService} from "../../services/service.service";
 
 @Component({

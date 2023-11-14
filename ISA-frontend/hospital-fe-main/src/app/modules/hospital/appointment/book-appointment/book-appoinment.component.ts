@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/auth/services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {TokenService} from "../../navbar/services/token.service";
+import {TokenService} from "../../../services/auth/services/token.service";
 import {ServiceService} from "../../../services/service.service";
 import {CreateAppointmentDto} from "../../../dto/createAppointmentDto";
 
@@ -86,8 +86,21 @@ export class BookAppoinment implements OnInit {
 
   book() {
 
-    if (this.quantityMax < this.quantity)
+    if (this.quantityMax < this.quantity){
       alert("Not enough in stock!")
+      return;
+    }
+
+    if (this.quantity < 1){
+      alert("You have to book 1 or more!")
+      return;
+    }
+    if (!this.quantity || !this.chosenAppointment){
+      alert("You have to fill out every field!")
+      return;
+    }
+
+
     this.chosenAppointment.employeeId = this.employeeId
     this.chosenAppointment.quantity = this.quantity;
 

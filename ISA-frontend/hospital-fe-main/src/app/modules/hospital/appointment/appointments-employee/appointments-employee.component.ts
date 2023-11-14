@@ -3,7 +3,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {DTOAppointment} from "../../../model/room.model";
 import {Router} from "@angular/router";
 import {AuthService} from "../../../services/auth/services/auth.service";
-import {TokenService} from "../../navbar/services/token.service";
+import {TokenService} from "../../../services/auth/services/token.service";
 import {ServiceService} from "../../../services/service.service";
 
 @Component({
@@ -27,7 +27,6 @@ export class AppointmentsEmployeeComponent implements OnInit {
   ngOnInit(): void {
 
     this.id = this.ts.getIdFromToken()
-
 
     this.Service.getAppointmentsByEmployeeId(this.id).subscribe(res => {
       this.appointments = res;

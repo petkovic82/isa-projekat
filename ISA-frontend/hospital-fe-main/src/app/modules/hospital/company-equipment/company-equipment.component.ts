@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {TokenService} from "../navbar/services/token.service";
+import {TokenService} from "../../services/auth/services/token.service";
 import {ServiceService} from "../../services/service.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";

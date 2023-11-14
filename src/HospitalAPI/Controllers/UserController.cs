@@ -38,7 +38,7 @@ namespace HospitalAPI.Controllers
                 Country = dto.Country,
                 PhoneNumber = dto.PhoneNumber,
                 Job = dto.Job,
-                CompanyId = dto.CompanyId,
+                CompanyId = 0,
                 Activated = false,
                 CancelCount = 0
             };
@@ -82,6 +82,9 @@ namespace HospitalAPI.Controllers
 
             switch (dto.UserRole)
             {
+                case Role.Employee:
+                    newUser.CompanyId = 0;
+                    break;
                 case Role.SystemAdmin:
                     newUser.CompanyId = 0;
                     break;

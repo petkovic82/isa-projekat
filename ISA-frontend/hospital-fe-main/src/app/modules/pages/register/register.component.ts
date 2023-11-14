@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {DTORegistrationMedicalData} from "../../services/auth/models/DTORegistrationMedicalData";
 import {AuthService} from "../../services/auth/services/auth.service";
 import {Router} from "@angular/router";
-import {TokenService} from "../../hospital/navbar/services/token.service";
+import {TokenService} from "../../services/auth/services/token.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ServiceService} from "../../services/service.service";
+import {catchError} from "rxjs/operators";
 
 @Component({
   selector: 'app-register',
@@ -67,6 +68,10 @@ export class RegisterComponent implements OnInit {
     this.newUser.email = this.email;
     this.newUser.password = this.password;
 
+    if (!this.newUser.email || !this.newUser.password || !this.newUser.username ){
+      alert("You have to fill out email, password and username fields!")
+      return;
+    }
 
     if (this.systemAdminLoggedIn) {
       this.authService.adminRegistration(this.newUser).subscribe({
@@ -75,7 +80,7 @@ export class RegisterComponent implements OnInit {
           alert("Successfully registered user with id: " + res.id + "! Check your email to confirm registration!");
         },
         error: err => {
-          if (err.status === 400) { //POPRAVI
+          if (err.status === 400) {
             alert('This company already has registered admin');
           }
         }
