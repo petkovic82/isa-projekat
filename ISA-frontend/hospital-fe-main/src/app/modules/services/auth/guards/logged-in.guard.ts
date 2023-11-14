@@ -7,26 +7,21 @@ import {AuthService} from "../services/auth.service";
 @Injectable({
   providedIn: 'root'
 })
-export class HasRoleCompanyAdminGuard {
+export class LoggedInGuard {
 
-  constructor(private authService: AuthService, private ts: TokenService, private router: Router) {
-  }
-  isLoggedUser() {
-    return this.authService.getToken() !== null;
-  }
+  constructor(private authService: AuthService, private ts: TokenService, private router: Router) {}
+
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    if (this.ts.getRole() === '1') {
+    if (this.ts.getRole() === '1' || this.ts.getRole() === '2' || this.ts.getRole() === '0') {
       return true;
     } else {
-      alert('You dont have permission to see this page')
-      if (this.isLoggedUser()) {
-        this.router.navigate(['/landing'])
-      } else {
-        this.router.navigate(['/'])
-      }
+      alert('You have to log in to see this page')
+      this.router.navigate(['/login'])
+
       return false;
     }
   }

@@ -15,19 +15,18 @@ import {
 } from "./modules/hospital/appointment/appointments-employee/appointments-employee.component";
 import {HasRoleEmployeeGuard} from "./modules/services/auth/guards/has-role-employee.guard";
 import {HasRoleCompanyAdminGuard} from "./modules/services/auth/guards/has-role-company-admin.guard";
+import {LoggedInGuard} from "./modules/services/auth/guards/logged-in.guard";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'login', component: LogInComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'landing', component: LandingPageComponent},
-  {path:'companies/employee/:id', component: CompaniesEmployeeComponent, canActivate:[HasRoleEmployeeGuard]},
-  {path: 'company-equipment/:id', component: CompanyEquipmentComponent},
-  {path: 'equipment-appointment/:id', component: BookAppoinment, canActivate:[HasRoleEmployeeGuard]},
-  {path: 'create-appointment', component: CreateAppointmentComponent, canActivate:[HasRoleCompanyAdminGuard]},
-  {path:'all-appointments', component:AppointmentsEmployeeComponent, canActivate:[HasRoleEmployeeGuard]}
-
-
+  {path: 'landing', component: LandingPageComponent, canActivate: [LoggedInGuard]},
+  {path: 'companies/employee/:id', component: CompaniesEmployeeComponent, canActivate: [HasRoleEmployeeGuard]},
+  {path: 'company-equipment/:id', component: CompanyEquipmentComponent, canActivate: [HasRoleEmployeeGuard]},
+  {path: 'equipment-appointment/:id', component: BookAppoinment, canActivate: [HasRoleEmployeeGuard]},
+  {path: 'create-appointment', component: CreateAppointmentComponent, canActivate: [HasRoleCompanyAdminGuard]},
+  {path: 'all-appointments', component: AppointmentsEmployeeComponent, canActivate: [HasRoleEmployeeGuard]}
 ];
 
 @NgModule({

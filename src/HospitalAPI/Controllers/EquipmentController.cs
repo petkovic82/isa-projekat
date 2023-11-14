@@ -40,16 +40,15 @@ namespace HospitalAPI.Controllers
             return Ok(result);
         }
 
-        //samo sme employee
-        [AllowAnonymous]
         [HttpGet("search{companyId}")]
+        [Authorize(Policy = "EmployeePolicy")]
         public ActionResult<List<Equipment>> SearchByNameInCompany(string searchQuery, int companyId)
         {
             var result = _equipmentService.SearchByNameInCompany(searchQuery, companyId);
             return Ok(result);
         }
 
-        // [Authorize]
+
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {

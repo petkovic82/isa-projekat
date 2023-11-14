@@ -4,9 +4,7 @@ import {AuthService} from "../../services/auth/services/auth.service";
 import {Router} from "@angular/router";
 import {TokenService} from "../../hospital/navbar/services/token.service";
 import {MatDialog} from "@angular/material/dialog";
-import {DialogComponent} from "../../hospital/dialog/dialog.component";
 import {ServiceService} from "../../services/service.service";
-import {catchError} from "rxjs/operators";
 
 @Component({
   selector: 'app-register',
@@ -34,10 +32,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private Service: ServiceService,
-              private router: Router,
-              private ts: TokenService, public dialog: MatDialog) {
+              private router: Router) {
   }
-
 
 
   roles = [
@@ -59,7 +55,7 @@ export class RegisterComponent implements OnInit {
     this.checkPasswordMatch()
     if (this.passwordsDoNotMatch) return;
 
-    this.newUser.userRole =  Number(this.role);
+    this.newUser.userRole = Number(this.role);
     this.newUser.city = this.city;
     this.newUser.username = this.username;
     this.newUser.country = this.country;
@@ -72,7 +68,7 @@ export class RegisterComponent implements OnInit {
     this.newUser.password = this.password;
 
 
-    if (this.systemAdminLoggedIn){
+    if (this.systemAdminLoggedIn) {
       this.authService.adminRegistration(this.newUser).subscribe({
         next: res => {
           console.log(res);
@@ -100,7 +96,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.authService.isSystemAdmin()){
+    if (this.authService.isSystemAdmin()) {
       this.systemAdminLoggedIn = true;
     }
     this.Service.getAllCompanies().subscribe((data: any) => {

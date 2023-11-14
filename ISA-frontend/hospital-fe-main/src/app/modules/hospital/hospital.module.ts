@@ -7,17 +7,13 @@ import {BookAppoinment} from './appointment/book-appointment/book-appoinment.com
 import {NavbarModule} from "./navbar/navbar.module";
 import {AppointmentsEmployeeComponent} from './appointment/appointments-employee/appointments-employee.component';
 import { FooterComponent } from './footer/footer.component';
-import { DialogComponent } from './dialog/dialog.component';
 import { CompaniesEmployeeComponent } from './companies-employee/companies-employee.component';
 import { CompanyEquipmentComponent } from './company-equipment/company-equipment.component';
 import { CreateAppointmentComponent } from './appointment/create-appointment/create-appointment.component';
 import {StatePipePipe} from "../services/state-pipe.pipe";
 
 
-const routes: Routes = [
-  {path: 'appointment-create', component: BookAppoinment},
-  {path: 'appointments/patient/:id', component: AppointmentsEmployeeComponent},
-]
+const routes: Routes = []
 
 @NgModule({
   declarations: [
@@ -25,7 +21,6 @@ const routes: Routes = [
     BookAppoinment,
     AppointmentsEmployeeComponent,
     FooterComponent,
-    DialogComponent,
     CompaniesEmployeeComponent,
     CompanyEquipmentComponent,
     CreateAppointmentComponent,

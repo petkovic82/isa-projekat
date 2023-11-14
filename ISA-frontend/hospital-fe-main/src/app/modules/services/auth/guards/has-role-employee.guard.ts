@@ -12,6 +12,9 @@ export class HasRoleEmployeeGuard {
   constructor(private authService: AuthService, private ts: TokenService, private router: Router) {
   }
 
+  isLoggedUser() {
+    return this.authService.getToken() !== null;
+  }
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
@@ -20,6 +23,11 @@ export class HasRoleEmployeeGuard {
       return true;
     } else {
       alert('You dont have permission to see this page')
+      if (this.isLoggedUser()) {
+        this.router.navigate(['/landing'])
+      } else {
+        this.router.navigate(['/'])
+      }
       return false;
     }
   }

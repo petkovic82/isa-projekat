@@ -60,7 +60,7 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpPost("adminRegistration")]
-        // [Authorize(Policy = "SystemAdminPolicy")]
+        [Authorize(Policy = "SystemAdminPolicy")]
         public async Task<IActionResult> RegisterBySystemAdmin(RegistrationDto dto)
         {
             var newUser = new User

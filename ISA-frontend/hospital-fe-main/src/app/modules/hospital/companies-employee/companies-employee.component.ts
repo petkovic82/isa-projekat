@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {DTOAppointment} from "../../model/room.model";
-import {AppointmentService} from "../../services/appointment.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ServiceService} from "../../services/service.service";
 import {TokenService} from "../navbar/services/token.service";
@@ -32,6 +31,6 @@ export class CompaniesEmployeeComponent implements OnInit {
   }
 
   seeAllEquipment(companyId: any) {
-    this.rout.navigate(['/company-equipment/'+ companyId]);
+    this.rout.navigate(['/company-equipment/' + companyId]);
   }
 }

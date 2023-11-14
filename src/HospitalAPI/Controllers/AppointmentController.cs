@@ -41,7 +41,7 @@ namespace HospitalAPI.Controllers
         
          
         [HttpGet("employee{id}")]
-     //   [Authorize(Policy = "EmployeePolicy")]
+        [Authorize(Policy = "EmployeePolicy")]
         public ActionResult GetByEmployeeId(int id)
         {
             var user = _appointmentService.GetByEmployeeId(id);
@@ -50,7 +50,7 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpPut("book")]
-        // [Authorize(Policy = "EmployeePolicy")]
+        [Authorize(Policy = "EmployeePolicy")]
         public async Task<IActionResult> Book(AppointmentDto dto)
         {
             if (_appointmentService.CanEmployeeBook(dto) == false)
@@ -90,7 +90,7 @@ namespace HospitalAPI.Controllers
 
         
         [HttpPut("cancel")]
-        // [Authorize(Policy = "EmployeePolicy")]
+        [Authorize(Policy = "EmployeePolicy")]
         public void Cancel(int appId)
         {
             _appointmentService.Cancel(appId);
@@ -98,7 +98,7 @@ namespace HospitalAPI.Controllers
 
 
         [HttpPost("create")]
-        // [Authorize(Policy = "CompanyAdminPolicy")]
+        [Authorize(Policy = "CompanyAdminPolicy")]
         public async Task<IActionResult> Create(AppointmentDto dto)
         {
             var newApp = new Appointment
