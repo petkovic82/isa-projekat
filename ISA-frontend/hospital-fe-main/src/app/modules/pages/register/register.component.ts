@@ -81,7 +81,7 @@ export class RegisterComponent implements OnInit {
         },
         error: err => {
           if (err.status === 400) {
-            alert('This company already has registered admin');
+            alert('Error');
           }
         }
       });

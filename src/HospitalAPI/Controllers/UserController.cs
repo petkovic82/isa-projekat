@@ -88,8 +88,6 @@ namespace HospitalAPI.Controllers
                 case Role.SystemAdmin:
                     newUser.CompanyId = 0;
                     break;
-                case Role.CompanyAdmin when _userService.FindCompanyAdmin(dto.CompanyId) != null:
-                    return BadRequest("Already registered admin for this company");
             }
 
             if (_userService.ExistsByUsername(newUser.Username))

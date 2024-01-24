@@ -7,12 +7,8 @@ import {LandingPageComponent} from "./modules/pages/landing-page/landing-page.co
 import {CompaniesEmployeeComponent} from "./modules/hospital/companies-employee/companies-employee.component";
 import {CompanyEquipmentComponent} from "./modules/hospital/company-equipment/company-equipment.component";
 import {BookAppoinment} from "./modules/hospital/appointment/book-appointment/book-appoinment.component";
-import {
-  CreateAppointmentComponent
-} from "./modules/hospital/appointment/create-appointment/create-appointment.component";
-import {
-  AppointmentsEmployeeComponent
-} from "./modules/hospital/appointment/appointments-employee/appointments-employee.component";
+import {CreateAppointmentComponent} from "./modules/hospital/appointment/create-appointment/create-appointment.component";
+import {AppointmentsEmployeeComponent} from "./modules/hospital/appointment/appointments-employee/appointments-employee.component";
 import {HasRoleEmployeeGuard} from "./modules/services/auth/guards/has-role-employee.guard";
 import {HasRoleCompanyAdminGuard} from "./modules/services/auth/guards/has-role-company-admin.guard";
 import {LoggedInGuard} from "./modules/services/auth/guards/logged-in.guard";

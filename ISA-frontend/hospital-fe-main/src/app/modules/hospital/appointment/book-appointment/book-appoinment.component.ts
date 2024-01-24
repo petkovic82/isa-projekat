@@ -106,7 +106,7 @@ export class BookAppoinment implements OnInit {
 
     this.Service.bookAppointment(this.chosenAppointment).subscribe({
       next: (res: any) => {
-        alert("You have successfully booked appointment with Id :" + res.id + '. Check ypur email for more info!')
+        alert("You have successfully booked appointment with Id :" + res.id + '. Check your email for more info!')
         this.router.navigate(['/all-appointments'])
       },
       error: (err: any) => {

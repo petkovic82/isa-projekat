@@ -57,34 +57,43 @@ namespace HospitalAPI.Controllers
                 return BadRequest(
                     "Cant book in same company at the same time");
 
-            var app = _appointmentService.GetById(dto.Id); //uvek ce biti dobar row version, posalji ceo dto u update ako stignes i 
-            //tek onda proveri je l valja rowVersion
+         
+
             var equipment = (Equipment)_equipmentService.GetById(dto.EquipmentId);
             var user = _userService.GetById(dto.EmployeeId);
 
-            app.EmployeeId = dto.EmployeeId;
-            app.State = State.Booked;
-            app.Quantity = dto.Quantity;
+            var bookApp = new Appointment()
+            {
+                Id = dto.Id,
+                EmployeeId =  dto.EmployeeId, 
+                EquipmentId = dto.EquipmentId,
+                Quantity = dto.Quantity,
+                Price = dto.Price,
+                State = State.Booked, 
+                Date = dto.Date, 
+                RowVersion = dto.RowVersion 
+            };
+            
 
             if (equipment != null)
             {
-                app.Price = equipment.Price * app.Quantity;
-
-                equipment.Quantity -= app.Quantity;
+                bookApp.Price = equipment.Price * bookApp.Quantity;
+                
+                equipment.Quantity -= bookApp.Quantity;
                 dto.EquipmentName = equipment.Name;
-
-                _appointmentService.Update(app);
+                
+                _appointmentService.Book(bookApp);
                 _equipmentService.Update(equipment);
             }
 
             dto.EmployeeFullName = user.FirstName + ' ' + user.LastName;
-            dto.Price = app.Price;
-            dto.State = app.State;
+            dto.Price = bookApp.Price;
+            dto.State = bookApp.State;
             var isEmailSent =
                 await _emailService.SendQrMail(user.Email, user.FirstName, dto);
             Console.WriteLine(isEmailSent ? "Email sent successfully." : "Email sending failed.");
 
-            return Ok(app);
+            return Ok(bookApp);
         }
 
 
@@ -109,7 +118,7 @@ namespace HospitalAPI.Controllers
                 Price = 0,
                 State = State.Available,
                 Date = dto.Date,
-                RowVersion = Guid.NewGuid()
+                RowVersion = new Guid("61F689EA-5C7A-4610-BE8A-15BDAD07D8A5")
             };
 
             _appointmentService.Create(newApp);
