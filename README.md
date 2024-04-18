@@ -1,4 +1,4 @@
-# hospital-be
+Aplikacija za nabavku medicinske opreme 
 
 1. Instalirati Postgres
 2. Ako je potrebno, u appsettings.json (HospitalAPI) promeniti username i password da odgovara bazi
